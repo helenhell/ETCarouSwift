@@ -1,0 +1,16 @@
+PODS:
+  - ETCarouSwift (1.0.0)
+
+DEPENDENCIES:
+  - ETCarouSwift (from `.`)
+
+EXTERNAL SOURCES:
+  ETCarouSwift:
+    :path: "."
+
+SPEC CHECKSUMS:
+  ETCarouSwift: b5e17c49fe3d10b51b4b3e5dc8472e951650e6ab
+
+PODFILE CHECKSUM: 35b6dbfb1f5d40b80c773107d2a9220959e7e179
+
+COCOAPODS: 1.8.4

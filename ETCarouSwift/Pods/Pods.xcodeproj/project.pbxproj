@@ -1,0 +1,522 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		D0B8C7F8AEB8DB4A8B6BA77A82E1269D /* ETCarouSwift */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = EF275B389A275FE5B2CD89287142EF6D /* Build configuration list for PBXAggregateTarget "ETCarouSwift" */;
+			buildPhases = (
+			);
+			dependencies = (
+			);
+			name = ETCarouSwift;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		0213DE8D1FCCD41D4839ED1597195850 /* Pods-ETCarouSwiftDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D5DED7C99F0270A4C419A05374FF3D1 /* Pods-ETCarouSwiftDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		11ED72BE64FDAECF86CC55A0994CCD31 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */; };
+		DBC89D832D8DA65964835F7127B120DA /* Pods-ETCarouSwiftDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 18B468A6673C195EB49F9203F9D6604E /* Pods-ETCarouSwiftDemo-dummy.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0A1DF119387DE0ABE0C82E24E4FB2120 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0B8C7F8AEB8DB4A8B6BA77A82E1269D;
+			remoteInfo = ETCarouSwift;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0FA749D1ADE7CD8A88CF6F3B4FC7ADF5 /* ETCarouSwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ETCarouSwift.xcconfig; sourceTree = "<group>"; };
+		11BC7C6955E30014E2DE3DBDEFC2A57F /* ETCarouSwift.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ETCarouSwift.h; path = ETCarouSwift/ETCarouSwift.h; sourceTree = "<group>"; };
+		18B468A6673C195EB49F9203F9D6604E /* Pods-ETCarouSwiftDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ETCarouSwiftDemo-dummy.m"; sourceTree = "<group>"; };
+		3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		47E4FD8AE44EA6EC3AABAF9C638B3993 /* Pods-ETCarouSwiftDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ETCarouSwiftDemo-acknowledgements.plist"; sourceTree = "<group>"; };
+		4D5DED7C99F0270A4C419A05374FF3D1 /* Pods-ETCarouSwiftDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ETCarouSwiftDemo-umbrella.h"; sourceTree = "<group>"; };
+		52DC5D929C12327C0812B2AB1CD83347 /* Pods-ETCarouSwiftDemo-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ETCarouSwiftDemo-Info.plist"; sourceTree = "<group>"; };
+		5B9CCED223E37C620E6FC73AE7580FD0 /* Pods-ETCarouSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ETCarouSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
+		849D71B78AA8A902A06D2504471C453F /* Pods-ETCarouSwiftDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ETCarouSwiftDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
+		8E3C0E39E36ACA5026CD120DCEBFEB5D /* ETCarouSwift.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = ETCarouSwift.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C829BE1B992CB5E812863E3BFE6F1DDD /* Pods-ETCarouSwiftDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ETCarouSwiftDemo.modulemap"; sourceTree = "<group>"; };
+		D4209CC9D5B9CC544E2009B100D2C122 /* Pods_ETCarouSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ETCarouSwiftDemo.framework; path = "Pods-ETCarouSwiftDemo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F0FCF206309CF1F5B806D9B0D6E97B68 /* Pods-ETCarouSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ETCarouSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		74ECD00BEAA0EE3410858CE547A4F2D6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				11ED72BE64FDAECF86CC55A0994CCD31 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		043210A473EEB740F08F9FE6448A453C /* Development Pods */ = {
+			isa = PBXGroup;
+			children = (
+				164D8398BC0EF3501676A9BE240DC2BC /* ETCarouSwift */,
+			);
+			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		078F5323DBAEF4A6ADD2F5B064F47E6A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				0FA749D1ADE7CD8A88CF6F3B4FC7ADF5 /* ETCarouSwift.xcconfig */,
+			);
+			name = "Support Files";
+			path = "Pods/Target Support Files/ETCarouSwift";
+			sourceTree = "<group>";
+		};
+		164D8398BC0EF3501676A9BE240DC2BC /* ETCarouSwift */ = {
+			isa = PBXGroup;
+			children = (
+				11BC7C6955E30014E2DE3DBDEFC2A57F /* ETCarouSwift.h */,
+				2F3E2003E12B6BDBDB4421BF50210C21 /* Pod */,
+				078F5323DBAEF4A6ADD2F5B064F47E6A /* Support Files */,
+			);
+			name = ETCarouSwift;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		2873849716F69B87329A60D9BD9293F0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D4209CC9D5B9CC544E2009B100D2C122 /* Pods_ETCarouSwiftDemo.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2F3E2003E12B6BDBDB4421BF50210C21 /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				8E3C0E39E36ACA5026CD120DCEBFEB5D /* ETCarouSwift.podspec */,
+			);
+			name = Pod;
+			sourceTree = "<group>";
+		};
+		326445144A67A973C3C89A25CF5A3BE5 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				89E61BA51F740B554C4CAFB1C519969A /* Pods-ETCarouSwiftDemo */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		89E61BA51F740B554C4CAFB1C519969A /* Pods-ETCarouSwiftDemo */ = {
+			isa = PBXGroup;
+			children = (
+				C829BE1B992CB5E812863E3BFE6F1DDD /* Pods-ETCarouSwiftDemo.modulemap */,
+				849D71B78AA8A902A06D2504471C453F /* Pods-ETCarouSwiftDemo-acknowledgements.markdown */,
+				47E4FD8AE44EA6EC3AABAF9C638B3993 /* Pods-ETCarouSwiftDemo-acknowledgements.plist */,
+				18B468A6673C195EB49F9203F9D6604E /* Pods-ETCarouSwiftDemo-dummy.m */,
+				52DC5D929C12327C0812B2AB1CD83347 /* Pods-ETCarouSwiftDemo-Info.plist */,
+				4D5DED7C99F0270A4C419A05374FF3D1 /* Pods-ETCarouSwiftDemo-umbrella.h */,
+				F0FCF206309CF1F5B806D9B0D6E97B68 /* Pods-ETCarouSwiftDemo.debug.xcconfig */,
+				5B9CCED223E37C620E6FC73AE7580FD0 /* Pods-ETCarouSwiftDemo.release.xcconfig */,
+			);
+			name = "Pods-ETCarouSwiftDemo";
+			path = "Target Support Files/Pods-ETCarouSwiftDemo";
+			sourceTree = "<group>";
+		};
+		C0834CEBB1379A84116EF29F93051C60 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				3212113385A8FBBDB272BD23C409FF61 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				043210A473EEB740F08F9FE6448A453C /* Development Pods */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				2873849716F69B87329A60D9BD9293F0 /* Products */,
+				326445144A67A973C3C89A25CF5A3BE5 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0834CEBB1379A84116EF29F93051C60 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		F027480A28D3286A00E9EFC33C4BC408 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0213DE8D1FCCD41D4839ED1597195850 /* Pods-ETCarouSwiftDemo-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0C20D80195CEF1A98E6EA5077B2D963A /* Pods-ETCarouSwiftDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D1E7BE61BF6A9D6CCFEB0E10F1EAB57 /* Build configuration list for PBXNativeTarget "Pods-ETCarouSwiftDemo" */;
+			buildPhases = (
+				F027480A28D3286A00E9EFC33C4BC408 /* Headers */,
+				B53025C41DE733CD418F816B471B4D7C /* Sources */,
+				74ECD00BEAA0EE3410858CE547A4F2D6 /* Frameworks */,
+				B11D086D8ED4EFDE287F237D8406A5BB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				605159B6DF5563CBD22C5DDE0605651D /* PBXTargetDependency */,
+			);
+			name = "Pods-ETCarouSwiftDemo";
+			productName = "Pods-ETCarouSwiftDemo";
+			productReference = D4209CC9D5B9CC544E2009B100D2C122 /* Pods_ETCarouSwiftDemo.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1100;
+				LastUpgradeCheck = 1100;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			productRefGroup = 2873849716F69B87329A60D9BD9293F0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D0B8C7F8AEB8DB4A8B6BA77A82E1269D /* ETCarouSwift */,
+				0C20D80195CEF1A98E6EA5077B2D963A /* Pods-ETCarouSwiftDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B11D086D8ED4EFDE287F237D8406A5BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B53025C41DE733CD418F816B471B4D7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBC89D832D8DA65964835F7127B120DA /* Pods-ETCarouSwiftDemo-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		605159B6DF5563CBD22C5DDE0605651D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ETCarouSwift;
+			target = D0B8C7F8AEB8DB4A8B6BA77A82E1269D /* ETCarouSwift */;
+			targetProxy = 0A1DF119387DE0ABE0C82E24E4FB2120 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		37F572A6C41D0EFE00E84090A496E80D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0FA749D1ADE7CD8A88CF6F3B4FC7ADF5 /* ETCarouSwift.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5B3798D6B479DAAEB047861070C9574F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F0FCF206309CF1F5B806D9B0D6E97B68 /* Pods-ETCarouSwiftDemo.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ETCarouSwiftDemo/Pods-ETCarouSwiftDemo-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ETCarouSwiftDemo/Pods-ETCarouSwiftDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		5EE8892A30E578C721D59FB9DDBD4BD7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0FA749D1ADE7CD8A88CF6F3B4FC7ADF5 /* ETCarouSwift.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		939F1A8F6BCEB7F9F64D9EEE50CAE014 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		CBF5509EDFA45FC0BECB39F1681ABB68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B9CCED223E37C620E6FC73AE7580FD0 /* Pods-ETCarouSwiftDemo.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ETCarouSwiftDemo/Pods-ETCarouSwiftDemo-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ETCarouSwiftDemo/Pods-ETCarouSwiftDemo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		ECB437504DF805BD96CAABF97400B526 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0D1E7BE61BF6A9D6CCFEB0E10F1EAB57 /* Build configuration list for PBXNativeTarget "Pods-ETCarouSwiftDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B3798D6B479DAAEB047861070C9574F /* Debug */,
+				CBF5509EDFA45FC0BECB39F1681ABB68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				939F1A8F6BCEB7F9F64D9EEE50CAE014 /* Debug */,
+				ECB437504DF805BD96CAABF97400B526 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF275B389A275FE5B2CD89287142EF6D /* Build configuration list for PBXAggregateTarget "ETCarouSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				37F572A6C41D0EFE00E84090A496E80D /* Debug */,
+				5EE8892A30E578C721D59FB9DDBD4BD7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

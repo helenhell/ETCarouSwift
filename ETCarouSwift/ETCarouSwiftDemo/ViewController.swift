@@ -22,7 +22,7 @@ class ViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let frame = CGRect(x: 10, y: 50, width: 300, height: 200)
+        let frame = CGRect(x: self.view.frame.width*0.05, y: self.view.frame.height*0.2, width: self.view.frame.width*0.9, height: self.view.frame.height*0.4)
         
         self.carouView = CarouView(frame: frame, imageSet: self.images, rideDirection: .rightToLeft)
         self.carouView.delegate = self
@@ -30,7 +30,8 @@ class ViewController: UIViewController{
         self.carouView.dotColor = UIColor.gray
         self.carouView.currentDotColor = UIColor.systemBlue
         self.carouView.dotSize = .medium
-        
+        self.carouView.layer.borderColor = UIColor.darkGray.cgColor
+        self.carouView.layer.borderWidth = 2
         self.view.addSubview(self.carouView)
     }
 }

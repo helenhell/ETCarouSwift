@@ -1,0 +1,11 @@
+framework module ETCarouSwift {
+  umbrella header "ETCarouSwift.h"
+
+  export *
+  module * { export * }
+}
+
+module ETCarouSwift.Swift {
+    header "ETCarouSwift-Swift.h"
+    requires objc
+}

@@ -7,53 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		512E3C6C23E5AFCF00CC8421 /* ETCarouSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 515CBB4F23E46A510083C352 /* ETCarouSwift.framework */; };
-		512E3C6D23E5AFCF00CC8421 /* ETCarouSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 515CBB4F23E46A510083C352 /* ETCarouSwift.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		512E3C6F23E5AFD100CC8421 /* Pods_ETCarouSwiftDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 816D3486E0DAC5349CEFAD4B /* Pods_ETCarouSwiftDemo.framework */; };
 		515CBB5423E46A510083C352 /* ETCarouSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 515CBB5223E46A510083C352 /* ETCarouSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		515CBB5B23E46B3A0083C352 /* CarouPageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB5A23E46B3A0083C352 /* CarouPageControl.swift */; };
 		515CBB5D23E46B5D0083C352 /* CarouCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB5C23E46B5D0083C352 /* CarouCollectionView.swift */; };
 		515CBB5F23E46B750083C352 /* CarouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB5E23E46B750083C352 /* CarouView.swift */; };
-		518EFD4E23E5ACA60010C4D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518EFD4D23E5ACA60010C4D6 /* AppDelegate.swift */; };
-		518EFD5023E5ACA60010C4D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518EFD4F23E5ACA60010C4D6 /* SceneDelegate.swift */; };
-		518EFD5223E5ACA60010C4D6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 518EFD5123E5ACA60010C4D6 /* ViewController.swift */; };
-		518EFD5523E5ACA60010C4D6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 518EFD5323E5ACA60010C4D6 /* Main.storyboard */; };
-		518EFD5723E5ACA70010C4D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 518EFD5623E5ACA70010C4D6 /* Assets.xcassets */; };
-		518EFD5A23E5ACA70010C4D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 518EFD5823E5ACA70010C4D6 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXCopyFilesBuildPhase section */
-		512E3C6E23E5AFCF00CC8421 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				512E3C6D23E5AFCF00CC8421 /* ETCarouSwift.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
 /* Begin PBXFileReference section */
-		3395867A346BAECCC089B3C5 /* Pods-ETCarouSwiftDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ETCarouSwiftDemo.debug.xcconfig"; path = "Target Support Files/Pods-ETCarouSwiftDemo/Pods-ETCarouSwiftDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		515CBB4F23E46A510083C352 /* ETCarouSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ETCarouSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		515CBB5223E46A510083C352 /* ETCarouSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ETCarouSwift.h; sourceTree = "<group>"; };
 		515CBB5323E46A510083C352 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		515CBB5A23E46B3A0083C352 /* CarouPageControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouPageControl.swift; sourceTree = "<group>"; };
 		515CBB5C23E46B5D0083C352 /* CarouCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouCollectionView.swift; sourceTree = "<group>"; };
 		515CBB5E23E46B750083C352 /* CarouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouView.swift; sourceTree = "<group>"; };
-		518EFD4B23E5ACA60010C4D6 /* ETCarouSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETCarouSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		518EFD4D23E5ACA60010C4D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		518EFD4F23E5ACA60010C4D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		518EFD5123E5ACA60010C4D6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		518EFD5423E5ACA60010C4D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		518EFD5623E5ACA70010C4D6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		518EFD5923E5ACA70010C4D6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		518EFD5B23E5ACA70010C4D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		816D3486E0DAC5349CEFAD4B /* Pods_ETCarouSwiftDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ETCarouSwiftDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F87C260177BAF447BA92404C /* Pods-ETCarouSwiftDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ETCarouSwiftDemo.release.xcconfig"; path = "Target Support Files/Pods-ETCarouSwiftDemo/Pods-ETCarouSwiftDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,35 +30,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		518EFD4823E5ACA60010C4D6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				512E3C6C23E5AFCF00CC8421 /* ETCarouSwift.framework in Frameworks */,
-				512E3C6F23E5AFD100CC8421 /* Pods_ETCarouSwiftDemo.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		420EBE629B55E1A62611EDE3 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				3395867A346BAECCC089B3C5 /* Pods-ETCarouSwiftDemo.debug.xcconfig */,
-				F87C260177BAF447BA92404C /* Pods-ETCarouSwiftDemo.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
 		515CBB4523E46A510083C352 = {
 			isa = PBXGroup;
 			children = (
 				515CBB5123E46A510083C352 /* ETCarouSwift */,
-				518EFD4C23E5ACA60010C4D6 /* ETCarouSwiftDemo */,
 				515CBB5023E46A510083C352 /* Products */,
-				420EBE629B55E1A62611EDE3 /* Pods */,
-				BE7EAB96E81AFD1AD719194E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -100,7 +45,6 @@
 			isa = PBXGroup;
 			children = (
 				515CBB4F23E46A510083C352 /* ETCarouSwift.framework */,
-				518EFD4B23E5ACA60010C4D6 /* ETCarouSwiftDemo.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,28 +59,6 @@
 				515CBB5E23E46B750083C352 /* CarouView.swift */,
 			);
 			path = ETCarouSwift;
-			sourceTree = "<group>";
-		};
-		518EFD4C23E5ACA60010C4D6 /* ETCarouSwiftDemo */ = {
-			isa = PBXGroup;
-			children = (
-				518EFD4D23E5ACA60010C4D6 /* AppDelegate.swift */,
-				518EFD4F23E5ACA60010C4D6 /* SceneDelegate.swift */,
-				518EFD5123E5ACA60010C4D6 /* ViewController.swift */,
-				518EFD5323E5ACA60010C4D6 /* Main.storyboard */,
-				518EFD5623E5ACA70010C4D6 /* Assets.xcassets */,
-				518EFD5823E5ACA70010C4D6 /* LaunchScreen.storyboard */,
-				518EFD5B23E5ACA70010C4D6 /* Info.plist */,
-			);
-			path = ETCarouSwiftDemo;
-			sourceTree = "<group>";
-		};
-		BE7EAB96E81AFD1AD719194E /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				816D3486E0DAC5349CEFAD4B /* Pods_ETCarouSwiftDemo.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -171,41 +93,18 @@
 			productReference = 515CBB4F23E46A510083C352 /* ETCarouSwift.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		518EFD4A23E5ACA60010C4D6 /* ETCarouSwiftDemo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 518EFD5E23E5ACA70010C4D6 /* Build configuration list for PBXNativeTarget "ETCarouSwiftDemo" */;
-			buildPhases = (
-				23A96E4DFDB98227EB27E52E /* [CP] Check Pods Manifest.lock */,
-				518EFD4723E5ACA60010C4D6 /* Sources */,
-				518EFD4823E5ACA60010C4D6 /* Frameworks */,
-				518EFD4923E5ACA60010C4D6 /* Resources */,
-				512E3C6E23E5AFCF00CC8421 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ETCarouSwiftDemo;
-			productName = ETCarouSwiftDemo;
-			productReference = 518EFD4B23E5ACA60010C4D6 /* ETCarouSwiftDemo.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		515CBB4623E46A510083C352 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = ElenaSlovushch;
 				TargetAttributes = {
 					515CBB4E23E46A510083C352 = {
 						CreatedOnToolsVersion = 11.3;
 						LastSwiftMigration = 1130;
-					};
-					518EFD4A23E5ACA60010C4D6 = {
-						CreatedOnToolsVersion = 11.3;
 					};
 				};
 			};
@@ -223,7 +122,6 @@
 			projectRoot = "";
 			targets = (
 				515CBB4E23E46A510083C352 /* ETCarouSwift */,
-				518EFD4A23E5ACA60010C4D6 /* ETCarouSwiftDemo */,
 			);
 		};
 /* End PBXProject section */
@@ -236,42 +134,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		518EFD4923E5ACA60010C4D6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				518EFD5A23E5ACA70010C4D6 /* LaunchScreen.storyboard in Resources */,
-				518EFD5723E5ACA70010C4D6 /* Assets.xcassets in Resources */,
-				518EFD5523E5ACA60010C4D6 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		23A96E4DFDB98227EB27E52E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ETCarouSwiftDemo-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		515CBB4B23E46A510083C352 /* Sources */ = {
@@ -284,36 +147,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		518EFD4723E5ACA60010C4D6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				518EFD5223E5ACA60010C4D6 /* ViewController.swift in Sources */,
-				518EFD4E23E5ACA60010C4D6 /* AppDelegate.swift in Sources */,
-				518EFD5023E5ACA60010C4D6 /* SceneDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		518EFD5323E5ACA60010C4D6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				518EFD5423E5ACA60010C4D6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		518EFD5823E5ACA70010C4D6 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				518EFD5923E5ACA70010C4D6 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		515CBB5523E46A510083C352 /* Debug */ = {
@@ -456,6 +290,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ElenaSlovushch.ETCarouSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -482,44 +317,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ElenaSlovushch.ETCarouSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		518EFD5C23E5ACA70010C4D6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3395867A346BAECCC089B3C5 /* Pods-ETCarouSwiftDemo.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = SQ4VJ58ARJ;
-				INFOPLIST_FILE = ETCarouSwiftDemo/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ElenaSlovushch.ETCarouSwiftDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		518EFD5D23E5ACA70010C4D6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F87C260177BAF447BA92404C /* Pods-ETCarouSwiftDemo.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = SQ4VJ58ARJ;
-				INFOPLIST_FILE = ETCarouSwiftDemo/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ElenaSlovushch.ETCarouSwiftDemo;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -542,15 +340,6 @@
 			buildConfigurations = (
 				515CBB5823E46A510083C352 /* Debug */,
 				515CBB5923E46A510083C352 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		518EFD5E23E5ACA70010C4D6 /* Build configuration list for PBXNativeTarget "ETCarouSwiftDemo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				518EFD5C23E5ACA70010C4D6 /* Debug */,
-				518EFD5D23E5ACA70010C4D6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

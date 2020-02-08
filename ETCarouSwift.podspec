@@ -10,10 +10,10 @@ Pod::Spec.new do |spec|
                    DESC
 
   spec.homepage     = "https://github.com/helenhell/ETCarouSwift"
-  spec.license      = "MIT"
+  spec.license      = 'MIT'
   spec.author             = { "Elena Slovushch" => "elena.slovushch@gmail.com" }
-  spec.platform     = :ios
-  spec.source       = { :git => "https://github.com/helenhell/ETCarouSwift", :tag => "#{spec.version}" }
+  spec.platform     = :ios, '12.0'
+  spec.source       = { :git => "https://github.com/helenhell/ETCarouSwift.git", :tag => "#{spec.version}" }
 
   spec.source_files  = "ETCarouSwift", "ETCarouSwift/*.{h,swift}"
   spec.swift_version = "5.0"

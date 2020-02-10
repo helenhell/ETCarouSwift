@@ -2,6 +2,13 @@
 
 A user-friendly and developer-friendly carousel framework. ETCarouSwift receives a bunch of images and creates a smooth infinite ride inside the given frame. Dragging is also avaliable along with other handy settings. Simple, light and flawless.
 
+## Demo
+
+Click on screnshot to try interactive demo by [appetize.io](https://appetize.io)
+
+[<img src="ETCarouSwift_screenshot.jpg" width="288" height="512" />](https://appetize.io/app/an0dku1e08nm2kv7p8984cyqx8?device=iphone8&scale=75&orientation=portrait&osVersion=13.3)
+
+
 ## Requirements
 
 * iOS 13.0+

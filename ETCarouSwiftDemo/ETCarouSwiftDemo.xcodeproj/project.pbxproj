@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5176F35423EF300600A0FF6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5176F35323EF300600A0FF6E /* AppDelegate.swift */; };
 		5176F35623EF300600A0FF6E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5176F35523EF300600A0FF6E /* SceneDelegate.swift */; };
-		5176F35823EF300600A0FF6E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5176F35723EF300600A0FF6E /* ViewController.swift */; };
 		5176F35B23EF300600A0FF6E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5176F35923EF300600A0FF6E /* Main.storyboard */; };
 		5176F35D23EF300800A0FF6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5176F35C23EF300800A0FF6E /* Assets.xcassets */; };
 		5176F36023EF300800A0FF6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5176F35E23EF300800A0FF6E /* LaunchScreen.storyboard */; };
@@ -35,7 +34,6 @@
 		5176F35023EF300600A0FF6E /* ETCarouSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETCarouSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5176F35323EF300600A0FF6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5176F35523EF300600A0FF6E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5176F35723EF300600A0FF6E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5176F35A23EF300600A0FF6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5176F35C23EF300800A0FF6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5176F35F23EF300800A0FF6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -77,7 +75,6 @@
 			children = (
 				5176F35323EF300600A0FF6E /* AppDelegate.swift */,
 				5176F35523EF300600A0FF6E /* SceneDelegate.swift */,
-				5176F35723EF300600A0FF6E /* ViewController.swift */,
 				5176F35923EF300600A0FF6E /* Main.storyboard */,
 				5176F35C23EF300800A0FF6E /* Assets.xcassets */,
 				5176F35E23EF300800A0FF6E /* LaunchScreen.storyboard */,
@@ -158,7 +155,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5176F35823EF300600A0FF6E /* ViewController.swift in Sources */,
 				5176F35423EF300600A0FF6E /* AppDelegate.swift in Sources */,
 				5176F35623EF300600A0FF6E /* SceneDelegate.swift in Sources */,
 			);

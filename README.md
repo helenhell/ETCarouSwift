@@ -1,6 +1,6 @@
 # ETCarouSwift
 
-A user-friendly and developer-friendly carousel framework. ETCarouSwift receives a bunch of images and creates a smooth infinite ride inside the given frame. Dragging is also avaliable along with other handy settings. Simple, light and flawless.
+A user-friendly and developer-friendly carousel framework built with SwiftUI. ETCarouSwift receives a bunch of images and creates a smooth infinite ride inside the given frame. Dragging is also available along with other handy settings. Simple, light and flawless.
 
 ## Demo
 
@@ -12,7 +12,8 @@ Click on the screnshot to try an interactive demo by [appetize.io](https://appet
 ## Requirements
 
 * iOS 13.0+
-* XCode 11.3
+* Xcode 11.0+
+* Swift 5.0+
 
 
 ## Installation
@@ -46,80 +47,145 @@ Or
 
 ### Get started
 
-To get the full benefits import ```ETCarouSwift```  wherever you import UIKit
+Import ```ETCarouSwift``` and ```SwiftUI``` in your SwiftUI view:
 
 ```Swift
-import UIKit
-import ETCarouSwift 
+import SwiftUI
+import ETCarouSwift
 ```
 
-Initialize ```CarouView``` with desired frame and bunch of images. Set ```rideDirection``` as well if needed. Default is ```.rightToLeft```:
+Initialize ```CarouView``` with a bunch of images. Set ```rideDirection``` as well if needed. Default is ```.rightToLeft```:
 
 ```Swift
-let images:[UIImage] = [UIImage(named: "1")!,
-                        UIImage(named: "2")!,
-                        UIImage(named: "3")!,
-                        UIImage(named: "4")!,
-                        UIImage(named: "5")!]
-                        
- let frame = CGRect(x: 10, y: 100, width: 300, height: 200)
- 
- let carouView = CarouView(frame: frame, imageSet: images, rideDirection: .leftToRight)
-```
-
-Add ```CarouView``` to the main view:
-
-```Swift
-self.view.addSubview(carouView)
+struct ContentView: View {
+    let images: [UIImage] = [
+        UIImage(named: "1")!,
+        UIImage(named: "2")!,
+        UIImage(named: "3")!,
+        UIImage(named: "4")!,
+        UIImage(named: "5")!
+    ]
+    
+    var body: some View {
+        CarouView(
+            imageSet: images,
+            rideDirection: .rightToLeft
+        )
+        .frame(height: 300)
+    }
+}
 ```
 
 ### Settings
 
-1. AutoRide is enabled by default. If you want to cancel it:
+All settings can be configured during initialization:
+
+1. **AutoRide** is enabled by default. To disable it:
 ```Swift
-carouView.autoRideEnabled = false
-```
-2. Page indicator dot color & current dot color:
-```Swift
-carouView.dotColor = UIColor.white
-carouView.currentDotColor = UIColor.black
-```
-3. Dot size. Default is ```.small```
-```Swift
-carouView.dotSize = .medium
-```
-4. Show time. Default is 2 seconds. Relevant when autoRide is enabled. 
-```Swift
-carouView.showTime = 3.5
+CarouView(
+    imageSet: images,
+    autoRideEnabled: false
+)
 ```
 
-### Delegate
-
-Make your controller an inheritor of ```CarouViewDelegate``` protocol:
+2. **Page indicator dot color & current dot color**:
 ```Swift
-class ViewController:UIViewController, CarouViewDelegate {
-```
-Initialize you ```carouView``` delegate with your controller property:
-
-```Swift
-carouView.delegate = self
+CarouView(
+    imageSet: images,
+    dotColor: .white,
+    currentDotColor: .black
+)
 ```
 
-Use two delegate methods:
-
+3. **Dot size**. Default is ```.small```. Options: ```.small```, ```.medium```, ```.large```
 ```Swift
-func carouViewDidChangeImage(_ carouView: CarouView, index currentImageIndex: Int) {
-        
-    //Do something when image changed
-        
-}
+CarouView(
+    imageSet: images,
+    dotSize: .medium
+)
 ```
 
+4. **Show time**. Default is 2 seconds. Relevant when autoRide is enabled:
 ```Swift
-func carouView(_ carouView: CarouView, didTapImageAt index: Int) {
+CarouView(
+    imageSet: images,
+    showTime: 3.5
+)
+```
+
+### Callbacks
+
+Use closures to handle image changes and taps:
+
+```Swift
+CarouView(
+    imageSet: images,
+    onImageChanged: { index in
+        print("Image changed to index: \(index)")
+        // Do something when image changed
+    },
+    onImageTapped: { index in
+        print("Image tapped at index: \(index)")
+        // Do something on image tap
+    }
+)
+```
+
+### Complete Example
+
+```Swift
+import SwiftUI
+import ETCarouSwift
+
+struct ContentView: View {
+    @State private var currentImageIndex: Int = 0
     
-    //Do something on image tap
+    let images: [UIImage] = [
+        UIImage(named: "1")!,
+        UIImage(named: "2")!,
+        UIImage(named: "3")!,
+        UIImage(named: "4")!,
+        UIImage(named: "5")!
+    ]
+    
+    var body: some View {
+        VStack {
+            CarouView(
+                imageSet: images,
+                rideDirection: .rightToLeft,
+                autoRideEnabled: true,
+                showTime: 2.0,
+                dotColor: .gray,
+                currentDotColor: .blue,
+                dotSize: .medium,
+                onImageChanged: { index in
+                    currentImageIndex = index
+                },
+                onImageTapped: { index in
+                    print("Tapped image at index: \(index)")
+                }
+            )
+            .frame(height: 300)
+            
+            Text("Image #\(currentImageIndex + 1)")
+                .font(.headline)
+        }
+    }
 }
+```
+
+### Using SwiftUI Images
+
+You can also use SwiftUI's `Image` type directly:
+
+```Swift
+let swiftUIImageSet: [Image] = [
+    Image("1"),
+    Image("2"),
+    Image("3")
+]
+
+CarouView(imageSet: swiftUIImageSet)
 ```
 
 ## Author

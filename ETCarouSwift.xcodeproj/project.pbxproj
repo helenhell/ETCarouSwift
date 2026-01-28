@@ -7,13 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		515CBB5423E46A510083C352 /* ETCarouSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 515CBB5223E46A510083C352 /* ETCarouSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		515CBB5F23E46B750083C352 /* CarouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB5E23E46B750083C352 /* CarouView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		515CBB4F23E46A510083C352 /* ETCarouSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ETCarouSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		515CBB5223E46A510083C352 /* ETCarouSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ETCarouSwift.h; sourceTree = "<group>"; };
 		515CBB5323E46A510083C352 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		515CBB5E23E46B750083C352 /* CarouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -48,7 +46,6 @@
 		515CBB5123E46A510083C352 /* ETCarouSwift */ = {
 			isa = PBXGroup;
 			children = (
-				515CBB5223E46A510083C352 /* ETCarouSwift.h */,
 				515CBB5323E46A510083C352 /* Info.plist */,
 				515CBB5E23E46B750083C352 /* CarouView.swift */,
 			);
@@ -62,7 +59,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				515CBB5423E46A510083C352 /* ETCarouSwift.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

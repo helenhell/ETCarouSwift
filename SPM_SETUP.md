@@ -50,5 +50,5 @@ This guide will help you set up the ETCarouSwift demo project to use the Swift P
 ## Troubleshooting
 
 - If you get build errors, make sure the Package.swift file is in the correct location
-- Ensure the deployment target is iOS 13.0 or higher
+- Ensure the deployment target is iOS 16.0 or higher
 - Clean build folder and rebuild if needed

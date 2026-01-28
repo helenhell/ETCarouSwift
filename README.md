@@ -11,9 +11,9 @@ Click on the screnshot to try an interactive demo by [appetize.io](https://appet
 
 ## Requirements
 
-* iOS 13.0+
-* Xcode 11.0+
-* Swift 5.0+
+* iOS 16.0+
+* Xcode 14.0+
+* Swift 5.7+
 
 
 ## Installation

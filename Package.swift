@@ -24,7 +24,7 @@ let package = Package(
             name: "ETCarouSwift",
             dependencies: [],
             path: "ETCarouSwift",
-            exclude: ["Info.plist", "ETCarouSwift.h"]
+            exclude: ["Info.plist"]
         ),
     ],
     swiftLanguageVersions: [.v5]

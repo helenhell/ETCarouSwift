@@ -18,28 +18,33 @@ Click on the screnshot to try an interactive demo by [appetize.io](https://appet
 
 ## Installation
 
-### CocoaPods
+### Swift Package Manager
 
-You can use [CocoaPods](https://cocoapods.org) to install ```ETCarouSwift``` by adding it to your ```Podfile```:
+ETCarouSwift is distributed as a Swift Package. You can add it to your project in two ways:
 
-```
-# Pods for YourProject
+#### Option 1: Add from GitHub (Recommended)
 
-   pod 'ETCarouSwift'
-```
+1. In Xcode, select **File** → **Add Package Dependencies...**
+2. Enter the repository URL: `https://github.com/helenhell/ETCarouSwift.git`
+3. Choose the version or branch you want to use
+4. Click **Add Package**
+5. Select the `ETCarouSwift` library product
+6. Click **Add Package**
 
-### Manually
+#### Option 2: Add Local Package (For Development)
 
-1. Download ```ETCarouSwiftDemo```
-2. Drag ```ETCarouSwift.framework``` to the root of Your Project
-3. Don't forget to check ```copy items if needed```
-4. Enjoy
+1. In Xcode, select **File** → **Add Package Dependencies...**
+2. Click **Add Local...**
+3. Navigate to the `ETCarouSwift` directory (the one containing `Package.swift`)
+4. Click **Add Package**
+5. Select the `ETCarouSwift` library product
+6. Click **Add Package**
 
-Or
+### Manual Installation
 
-1. Download ```ETCarouSwift``` repo
-2. Copy ```ETCarouSwift``` folder into YourProject
-3. That's it
+1. Download the ```ETCarouSwift``` repository
+2. Copy the ```ETCarouSwift``` folder into your project
+3. In Xcode, add the local package as described in Option 2 above
 
 
 

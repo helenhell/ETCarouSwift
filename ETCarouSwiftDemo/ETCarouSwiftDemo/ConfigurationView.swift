@@ -10,13 +10,14 @@ import SwiftUI
 import ETCarouSwift
 
 struct ConfigurationView: View {
-    @State private var rideDirection: CarouDirection = .rightToLeft
+    @State private var rideDirection: CarouDirection = .leftToRight
     @State private var autoRideEnabled: Bool = true
     @State private var showTime: Double = 2.0
     @State private var dotColor: Color = .gray
     @State private var currentDotColor: Color = .blue
     @State private var dotSize: CarouDotSize = .medium
     @State private var imageScale: CarouImageScale = .fill
+    @State private var showDemo = false
 
     private var builtConfiguration: CarouViewConfiguration {
         CarouViewConfiguration(
@@ -40,17 +41,17 @@ struct ConfigurationView: View {
                 .pickerStyle(.menu)
 
                 Toggle("Auto-ride enabled", isOn: $autoRideEnabled)
-            }
 
-            Section("Timing") {
-                VStack(alignment: .leading, spacing: 8) {
-                    HStack {
-                        Text("Show time")
-                        Spacer()
-                        Text(String(format: "%.1f s", showTime))
-                            .foregroundStyle(.secondary)
+                if autoRideEnabled {
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            Text("Slide duration")
+                            Spacer()
+                            Text(String(format: "%.1f s", showTime))
+                                .foregroundStyle(.secondary)
+                        }
+                        Slider(value: $showTime, in: 0.5...5.0, step: 0.5)
                     }
-                    Slider(value: $showTime, in: 0.5...5.0, step: 0.5)
                 }
             }
 
@@ -75,25 +76,34 @@ struct ConfigurationView: View {
             }
 
             Section {
-                NavigationLink {
-                    CarouselDemoView(configuration: builtConfiguration)
+                Button {
+                    showDemo = true
                 } label: {
                     HStack {
                         Spacer()
                         Text("Launch Demo")
                             .font(.headline)
                             .foregroundStyle(.white)
+                        Image(systemName: "chevron.right")
+                            .font(.body.weight(.semibold))
+                            .foregroundStyle(.white)
                         Spacer()
                     }
                     .padding(.vertical, 12)
-                    .listRowBackground(Color.accentColor)
                 }
+                .listRowBackground(
+                    Rectangle()
+                        .fill(Color.blue)
+                        .ignoresSafeArea(edges: .horizontal)
+                )
                 .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
-                .tint(.white)
             }
         }
         .navigationTitle("Carousel Config")
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $showDemo) {
+            CarouselDemoView(configuration: builtConfiguration)
+        }
     }
 }
 

@@ -38,6 +38,10 @@ public struct CarouView: View {
         self.configuration = configuration
         self.onImageChanged = onImageChanged
         self.onImageTapped = onImageTapped
+        let count = imageSet.count
+        let totalPages = count + 2
+        let initialPage: CGFloat = count <= 1 ? 1 : (configuration.rideDirection == .rightToLeft ? CGFloat(count) : 1)
+        _scrollOffset = State(initialValue: initialPage)
     }
     
     public var body: some View {
@@ -64,20 +68,20 @@ public struct CarouView: View {
                     let resolvedConfig = configuration.with(viewWidth: pageWidth)
                     let effectiveOffset = scrollOffset - dragOffset / pageWidth
                     let visiblePage = max(0, min(CGFloat(totalPages - 1), effectiveOffset))
-                    let currentLogical = logicalIndex(for: Int(round(visiblePage)), count: count)
+                    let currentLogical = logicalIndex(for: Int(round(visiblePage)), count: count, direction: configuration.rideDirection)
                     
                     ZStack(alignment: .bottom) {
                         // Strip: full width, then offset; frame(alignment: .leading) so visible window is [0, pageWidth] over strip
                         HStack(spacing: 0) {
                             ForEach(0..<totalPages, id: \.self) { p in
-                                imageForPage(p, count: count)
+                                imageForPage(p, count: count, direction: configuration.rideDirection)
                                     .resizable()
                                     .carouImageScale(configuration.imageScale)
                                     .frame(width: pageWidth, height: geometry.size.height)
                                     .clipped()
                                     .contentShape(Rectangle())
                                     .onTapGesture {
-                                        onImageTapped?(logicalIndex(for: p, count: count))
+                                        onImageTapped?(logicalIndex(for: p, count: count, direction: configuration.rideDirection))
                                     }
                             }
                         }
@@ -137,7 +141,7 @@ public struct CarouView: View {
                                             dragOffset = 0
                                         }
                                     }
-                                    onImageChanged?(logicalIndex(for: snap, count: count))
+                                    onImageChanged?(logicalIndex(for: snap, count: count, direction: configuration.rideDirection))
                                     if configuration.autoRideEnabled { startAutoRide() }
                                 }
                         )
@@ -147,7 +151,8 @@ public struct CarouView: View {
                             currentPage: currentLogical,
                             dotColor: configuration.dotColor,
                             currentDotColor: configuration.currentDotColor,
-                            dotSizePoints: resolvedConfig.dotSizePoints
+                            dotSizePoints: resolvedConfig.dotSizePoints,
+                            direction: configuration.rideDirection
                         )
                         .frame(maxWidth: .infinity, alignment: .center)
                         .frame(height: geometry.size.height * 0.25)
@@ -168,19 +173,32 @@ public struct CarouView: View {
         }
     }
     
-    /// Map display page to image: 0 → last, 1..count → originals, count+1 → first
-    private func imageForPage(_ p: Int, count: Int) -> Image {
-        if p == 0 { return images[count - 1] }
-        if p == count + 1 { return images[0] }
-        return images[p - 1]
+    /// Map display page to image. LTR: 0 → last, 1..count → originals, count+1 → first. RTL: 0 & count → first, 1 & count+1 → last, else → count-p.
+    private func imageForPage(_ p: Int, count: Int, direction: CarouDirection) -> Image {
+        switch direction {
+        case .leftToRight:
+            if p == 0 { return images[count - 1] }
+            if p == count + 1 { return images[0] }
+            return images[p - 1]
+        case .rightToLeft:
+            if p == 0 || p == count { return images[0] }
+            if p == 1 || p == count + 1 { return images[count - 1] }
+            return images[count - p]
+        }
     }
     
     /// Logical index 0..count-1 for callbacks and page control
-    private func logicalIndex(for page: Int, count: Int) -> Int {
-        if page <= 0 { return count - 1 }
-        if page >= count + 1 { return 0 }
-        let logical = page - 1
-        return max(0, min(count - 1, logical))
+    private func logicalIndex(for page: Int, count: Int, direction: CarouDirection) -> Int {
+        switch direction {
+        case .leftToRight:
+            if page <= 0 { return count - 1 }
+            if page >= count + 1 { return 0 }
+            return max(0, min(count - 1, page - 1))
+        case .rightToLeft:
+            if page == 0 || page == count { return 0 }
+            if page == 1 || page == count + 1 { return count - 1 }
+            return max(0, min(count - 1, count - page))
+        }
     }
     
     private func startAutoRide() {
@@ -192,27 +210,30 @@ public struct CarouView: View {
             guard !isUserInteracting else { return }
             Task { @MainActor in
                 let currentPage = Int(round(scrollOffset))
-                let nextPage = configuration.rideDirection == .rightToLeft
-                    ? (currentPage + 1) % totalPages
-                    : (currentPage - 1 + totalPages) % totalPages
-                // Same slide transition as user swipe (animate scrollOffset)
+                let isRTL = configuration.rideDirection == .rightToLeft
+                // RTL strip: first at page count, next to the left (decrease). LTR strip: first at 1, next to the right (increase).
+                let nextPage: Int
+                if isRTL {
+                    nextPage = (currentPage - 1 + totalPages) % totalPages
+                } else {
+                    nextPage = (currentPage + 1) % totalPages
+                }
                 withAnimation(.easeInOut(duration: duration)) {
                     scrollOffset = CGFloat(nextPage)
                 }
                 print("Autoride triggered at: \(Date())")
                 if nextPage >= 1 && nextPage <= count {
-                    onImageChanged?(logicalIndex(for: nextPage, count: count))
+                    onImageChanged?(logicalIndex(for: nextPage, count: count, direction: configuration.rideDirection))
                 } else {
-                    // Landed on copy; instant jump to original (same image = invisible, no backwards scroll)
                     Task { @MainActor in
                         try? await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
-                        let targetPage = nextPage == 0 ? count : 1
+                        let targetPage = (nextPage == 0 ? count : 1)
                         var t = Transaction()
                         t.disablesAnimations = true
                         withTransaction(t) {
                             scrollOffset = CGFloat(targetPage)
                         }
-                        onImageChanged?(logicalIndex(for: targetPage, count: count))
+                        onImageChanged?(logicalIndex(for: targetPage, count: count, direction: configuration.rideDirection))
                     }
                 }
             }
@@ -225,7 +246,7 @@ public struct CarouView: View {
     }
     
     public var carouIndex: Int {
-        logicalIndex(for: Int(round(scrollOffset)), count: images.count)
+        logicalIndex(for: Int(round(scrollOffset)), count: images.count, direction: configuration.rideDirection)
     }
 }
 
@@ -236,6 +257,7 @@ struct CarouPageControl: View {
     let dotColor: Color
     let currentDotColor: Color
     let dotSizePoints: CGFloat
+    var direction: CarouDirection = .leftToRight
     
     var body: some View {
         HStack(spacing: 8) {
@@ -247,6 +269,7 @@ struct CarouPageControl: View {
                     .animation(.spring(response: 0.3), value: currentPage)
             }
         }
+        .environment(\.layoutDirection, direction == .rightToLeft ? .rightToLeft : .leftToRight)
     }
 }
 
@@ -263,6 +286,9 @@ extension CarouView {
         self.configuration = configuration
         self.onImageChanged = onImageChanged
         self.onImageTapped = onImageTapped
+        let count = imageSet.count
+        let initialPage: CGFloat = count <= 1 ? 1 : (configuration.rideDirection == .rightToLeft ? CGFloat(count) : 1)
+        _scrollOffset = State(initialValue: initialPage)
     }
 }
 

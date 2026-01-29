@@ -38,6 +38,8 @@ public struct CarouViewConfiguration {
     /// When non-nil, dot size is a fraction of this width. When nil, absolute point sizes are used.
     public let viewWidth: CGFloat?
     
+    var dotSizePoints: CGFloat
+    
     public init(
         rideDirection: CarouDirection = .rightToLeft,
         autoRideEnabled: Bool = true,
@@ -54,6 +56,7 @@ public struct CarouViewConfiguration {
         self.currentDotColor = currentDotColor
         self.dotSize = dotSize
         self.viewWidth = viewWidth
+        dotSizePoints = Self.dotSizeInPoints(dotSize: dotSize, viewWidth: viewWidth)
     }
     
     /// Returns a configuration with the given view width (e.g. from layout). Use this in the view when you have geometry.
@@ -70,10 +73,6 @@ public struct CarouViewConfiguration {
     }
     
     /// Dot size in points: relative to view width when `viewWidth` is set, otherwise absolute fallback.
-    var dotSizePoints: CGFloat {
-        Self.dotSizeInPoints(dotSize: dotSize, viewWidth: viewWidth)
-    }
-    
     private static func dotSizeInPoints(dotSize: CarouDotSize, viewWidth: CGFloat?) -> CGFloat {
         if let width = viewWidth {
             return width * dotSize.rawValue

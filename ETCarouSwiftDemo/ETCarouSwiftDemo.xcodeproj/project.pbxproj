@@ -10,6 +10,7 @@
 		5176F35423EF300600A0FF6E /* ETCarouSwiftDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5176F35323EF300600A0FF6E /* ETCarouSwiftDemoApp.swift */; };
 		5176F35D23EF300800A0FF6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5176F35C23EF300800A0FF6E /* Assets.xcassets */; };
 		F31616582F29F7C500010E25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31616572F29F7C500010E25 /* ContentView.swift */; };
+		F31616602F2B3A0000010E25 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316165F2F2B3A0000010E25 /* ConfigurationView.swift */; };
 		F316165B2F2B37E000010E25 /* ETCarouSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F316165A2F2B37E000010E25 /* ETCarouSwift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		5176F35C23EF300800A0FF6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5176F36123EF300800A0FF6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F31616572F29F7C500010E25 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F316165F2F2B3A0000010E25 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 		5176F35223EF300600A0FF6E /* ETCarouSwiftDemo */ = {
 			isa = PBXGroup;
 			children = (
+				F316165F2F2B3A0000010E25 /* ConfigurationView.swift */,
 				F31616572F29F7C500010E25 /* ContentView.swift */,
 				5176F35323EF300600A0FF6E /* ETCarouSwiftDemoApp.swift */,
 				5176F35C23EF300800A0FF6E /* Assets.xcassets */,
@@ -151,6 +154,7 @@
 			files = (
 				5176F35423EF300600A0FF6E /* ETCarouSwiftDemoApp.swift in Sources */,
 				F31616582F29F7C500010E25 /* ContentView.swift in Sources */,
+				F31616602F2B3A0000010E25 /* ConfigurationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

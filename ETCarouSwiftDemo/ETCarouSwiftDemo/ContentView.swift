@@ -9,29 +9,24 @@
 import SwiftUI
 import ETCarouSwift
 
-struct ContentView: View {
+/// Demo screen that shows the carousel with the given configuration.
+struct CarouselDemoView: View {
+    let configuration: CarouViewConfiguration
     @State private var currentImageIndex: Int = 0
-    
-    let images: [Image] = [
+
+    private let images: [Image] = [
         Image("1"),
         Image("2"),
         Image("3"),
         Image("4"),
         Image("5")
     ]
-    
+
     var body: some View {
         VStack(spacing: 20) {
             CarouView(
                 imageSet: images,
-                configuration: CarouViewConfiguration(
-                    rideDirection: .rightToLeft,
-                    autoRideEnabled: true,
-                    showTime: 2.0,
-                    dotColor: .gray,
-                    currentDotColor: .blue,
-                    dotSize: .medium
-                ),
+                configuration: configuration,
                 onImageChanged: { index in
                     currentImageIndex = index
                     print("Image changed to index: \(index)")
@@ -46,14 +41,32 @@ struct ContentView: View {
                     .stroke(Color.gray.opacity(0.5), lineWidth: 2)
             )
             .padding(.horizontal, 20)
-            
+
             Text("Image #\(currentImageIndex + 1)")
                 .font(.system(size: 20, weight: .bold))
+            Spacer()
         }
-        .padding()
+        .padding(.top, 20)
+        .navigationTitle("Demo")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-#Preview {
+/// Root content: configuration screen (entry point for the demo app).
+struct ContentView: View {
+    var body: some View {
+        NavigationStack {
+            ConfigurationView()
+        }
+    }
+}
+
+#Preview("Configuration") {
     ContentView()
+}
+
+#Preview("Demo") {
+    NavigationStack {
+        CarouselDemoView(configuration: CarouViewConfiguration())
+    }
 }

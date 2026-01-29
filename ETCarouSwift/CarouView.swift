@@ -24,9 +24,9 @@ public enum CarouDotSize: CGFloat {
 }
 
 public struct CarouView: View {
-    @State private var currentIndex: Int = 0
+    /// Display page index in extended array: [copyOfLast, 0, 1, ..., n-1, copyOfFirst]. Start at 1 (first original).
+    @State private var pageIndex: Int = 1
     @State private var timer: Timer?
-    @State private var dragOffset: CGFloat = 0
     @State private var isUserInteracting: Bool = false
     
     private let images: [Image]
@@ -79,28 +79,44 @@ public struct CarouView: View {
                             onImageTapped?(0)
                         }
                 } else {
-                    // Multiple images - infinite carousel using TabView
-                    TabView(selection: $currentIndex) {
-                        ForEach(0..<images.count, id: \.self) { index in
-                            images[index]
+                    // Multiple images - UIKit-style infinite carousel: [copyOfLast, 0, 1, ..., n-1, copyOfFirst]
+                    let count = images.count
+                    let totalPages = count + 2
+                    TabView(selection: $pageIndex) {
+                        ForEach(0..<totalPages, id: \.self) { p in
+                            imageForPage(p, count: count)
                                 .resizable()
                                 .scaledToFill()
                                 .frame(width: geometry.size.width, height: geometry.size.height)
                                 .clipped()
-                                .tag(index)
+                                .tag(p)
                                 .onTapGesture {
-                                    onImageTapped?(index)
+                                    onImageTapped?(logicalIndex(for: p, count: count))
                                 }
                         }
                     }
                     .tabViewStyle(.page(indexDisplayMode: .never))
                     .indexViewStyle(.page(backgroundDisplayMode: .never))
-                    .onChange(of: currentIndex) { newIndex in
+                    .animation(.easeInOut(duration: 0.35), value: pageIndex)
+                    .onChange(of: pageIndex) { newPage in
+                        // Seamless wraparound: jump from copy to original with same easeInOut so it doesn't catch the eye
+                        if newPage == totalPages - 1 {
+                            withAnimation(.easeInOut(duration: 0.35)) {
+                                pageIndex = 1
+                            }
+                            return
+                        }
+                        if newPage == 0 {
+                            withAnimation(.easeInOut(duration: 0.35)) {
+                                pageIndex = count
+                            }
+                            return
+                        }
                         if !isUserInteracting {
-                            onImageChanged?(newIndex)
+                            onImageChanged?(logicalIndex(for: newPage, count: count))
                         }
                     }
-                    .gesture(
+                    .simultaneousGesture(
                         DragGesture()
                             .onChanged { _ in
                                 isUserInteracting = true
@@ -108,15 +124,13 @@ public struct CarouView: View {
                             }
                             .onEnded { _ in
                                 isUserInteracting = false
-                                if autoRideEnabled {
-                                    startAutoRide()
-                                }
+                                if autoRideEnabled { startAutoRide() }
                             }
                     )
                     .overlay(alignment: .bottom) {
                         CarouPageControl(
-                            numberOfPages: images.count,
-                            currentPage: currentIndex,
+                            numberOfPages: count,
+                            currentPage: logicalIndex(for: pageIndex, count: count),
                             dotColor: dotColor,
                             currentDotColor: currentDotColor,
                             dotSize: dotSize
@@ -137,18 +151,39 @@ public struct CarouView: View {
         }
     }
     
+    /// Map display page to image: 0 → last, 1..count → originals, count+1 → first
+    private func imageForPage(_ p: Int, count: Int) -> Image {
+        if p == 0 { return images[count - 1] }
+        if p == count + 1 { return images[0] }
+        return images[p - 1]
+    }
+    
+    /// Logical index 0..count-1 for callbacks and page control
+    private func logicalIndex(for page: Int, count: Int) -> Int {
+        if page == 0 { return count - 1 }
+        if page == count + 1 { return 0 }
+        return page - 1
+    }
+    
     private func startAutoRide() {
         stopAutoRide()
+        let count = images.count
+        let totalPages = count + 2
         timer = Timer.scheduledTimer(withTimeInterval: showTime, repeats: true) { _ in
             guard !isUserInteracting else { return }
-            withAnimation(.easeInOut(duration: 0.5)) {
-                if rideDirection == .rightToLeft {
-                    currentIndex = (currentIndex + 1) % images.count
-                } else {
-                    currentIndex = (currentIndex - 1 + images.count) % images.count
+            Task { @MainActor in
+                let nextPage = rideDirection == .rightToLeft
+                    ? (pageIndex + 1) % totalPages
+                    : (pageIndex - 1 + totalPages) % totalPages
+                // Use same slide transition as user swipe (easeInOut so it looks identical)
+                withAnimation(.easeInOut(duration: 0.35)) {
+                    pageIndex = nextPage
+                }
+                // Only call here when stable; onChange handles jump and callback for 0 / totalPages-1
+                if nextPage >= 1 && nextPage <= count {
+                    onImageChanged?(logicalIndex(for: nextPage, count: count))
                 }
             }
-            onImageChanged?(currentIndex)
         }
     }
     
@@ -158,7 +193,7 @@ public struct CarouView: View {
     }
     
     public var carouIndex: Int {
-        currentIndex
+        logicalIndex(for: pageIndex, count: images.count)
     }
 }
 
@@ -209,17 +244,3 @@ extension CarouView {
     }
 }
 
-// MARK: - UIImage Extension (for backward compatibility)
-extension UIImage {
-    convenience init?(color: UIColor, size: CGSize = CGSize(width: 1, height: 1)) {
-        let rect = CGRect(origin: .zero, size: size)
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, 0.0)
-        color.setFill()
-        UIRectFill(rect)
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        guard let cgImage = image?.cgImage else { return nil }
-        self.init(cgImage: cgImage)
-    }
-}

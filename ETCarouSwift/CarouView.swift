@@ -19,6 +19,9 @@ public struct CarouView: View {
     @State private var dragOffset: CGFloat = 0
     @State private var timer: Timer?
     @State private var isUserInteracting: Bool = false
+    /// For velocity-based snap: last translation and time during drag.
+    @State private var lastDragTranslation: CGFloat = 0
+    @State private var lastDragTime: TimeInterval = 0
     
     private let images: [Image]
     private let configuration: CarouViewConfiguration
@@ -86,7 +89,7 @@ public struct CarouView: View {
                         .transaction { t in
                             if isUserInteracting { t.animation = nil; t.disablesAnimations = true }
                         }
-                        .animation(.easeInOut(duration: 0.35), value: scrollOffset)
+                        .animation(.easeInOut(duration: 0.3), value: scrollOffset)
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onChanged { value in
@@ -96,25 +99,40 @@ public struct CarouView: View {
                                     t.disablesAnimations = true
                                     withTransaction(t) {
                                         dragOffset = value.translation.width
+                                        lastDragTranslation = value.translation.width
+                                        lastDragTime = Date().timeIntervalSince1970
                                     }
                                 }
                                 .onEnded { value in
                                     isUserInteracting = false
                                     let effective = scrollOffset - dragOffset / pageWidth
-                                    var snap = Int(round(effective))
+                                    // Velocity-based snap: use direction to pick floor/ceil so we never double-advance
+                                    let dt = max(0.001, Date().timeIntervalSince1970 - lastDragTime)
+                                    let velocity = (value.translation.width - lastDragTranslation) / CGFloat(dt)
+                                    let velocityThreshold: CGFloat = 200
+                                    let clampedEffective = max(0, min(CGFloat(totalPages - 1), effective))
+                                    var snap: Int
+                                    if velocity < -velocityThreshold {
+                                        snap = min(totalPages - 1, Int(ceil(clampedEffective)))
+                                    } else if velocity > velocityThreshold {
+                                        snap = max(0, Int(floor(clampedEffective)))
+                                    } else {
+                                        snap = Int(round(clampedEffective))
+                                    }
                                     snap = max(0, min(totalPages - 1, snap))
                                     let isWraparound = (snap == 0 || snap == totalPages - 1)
                                     if snap == 0 { snap = count }
                                     else if snap == totalPages - 1 { snap = 1 }
                                     if isWraparound {
-                                        // Edge: longer duration + more pronounced easeInOut (slower start/end)
-                                        let edgeAnimation = Animation.timingCurve(0.33, 0, 0.67, 1, duration: 0.6)
-                                        withAnimation(edgeAnimation) {
+                                        // Instant jump: same image is already visible, no animation so no visible "backwards" scroll
+                                        var t = Transaction()
+                                        t.disablesAnimations = true
+                                        withTransaction(t) {
                                             scrollOffset = CGFloat(snap)
                                             dragOffset = 0
                                         }
                                     } else {
-                                        withAnimation(.easeInOut(duration: 0.35)) {
+                                        withAnimation(.easeInOut(duration: 0.3)) {
                                             scrollOffset = CGFloat(snap)
                                             dragOffset = 0
                                         }
@@ -181,6 +199,7 @@ public struct CarouView: View {
                 withAnimation(.easeInOut(duration: duration)) {
                     scrollOffset = CGFloat(nextPage)
                 }
+                print("Autoride triggered at: \(Date())")
                 if nextPage >= 1 && nextPage <= count {
                     onImageChanged?(logicalIndex(for: nextPage, count: count))
                 } else {

@@ -3,17 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5176F35423EF300600A0FF6E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5176F35323EF300600A0FF6E /* AppDelegate.swift */; };
-		5176F35623EF300600A0FF6E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5176F35523EF300600A0FF6E /* SceneDelegate.swift */; };
-		5176F35B23EF300600A0FF6E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5176F35923EF300600A0FF6E /* Main.storyboard */; };
+		5176F35423EF300600A0FF6E /* ETCarouSwiftDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5176F35323EF300600A0FF6E /* ETCarouSwiftDemoApp.swift */; };
 		5176F35D23EF300800A0FF6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5176F35C23EF300800A0FF6E /* Assets.xcassets */; };
-		5176F36023EF300800A0FF6E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5176F35E23EF300800A0FF6E /* LaunchScreen.storyboard */; };
-		5176F36923EF307000A0FF6E /* ETCarouSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5176F36723EF306200A0FF6E /* ETCarouSwift.framework */; };
-		5176F36A23EF307000A0FF6E /* ETCarouSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5176F36723EF306200A0FF6E /* ETCarouSwift.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F31616582F29F7C500010E25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31616572F29F7C500010E25 /* ContentView.swift */; };
+		F316165B2F2B37E000010E25 /* ETCarouSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F316165A2F2B37E000010E25 /* ETCarouSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,7 +20,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5176F36A23EF307000A0FF6E /* ETCarouSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -32,13 +28,10 @@
 
 /* Begin PBXFileReference section */
 		5176F35023EF300600A0FF6E /* ETCarouSwiftDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ETCarouSwiftDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		5176F35323EF300600A0FF6E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5176F35523EF300600A0FF6E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		5176F35A23EF300600A0FF6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5176F35323EF300600A0FF6E /* ETCarouSwiftDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ETCarouSwiftDemoApp.swift; sourceTree = "<group>"; };
 		5176F35C23EF300800A0FF6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5176F35F23EF300800A0FF6E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5176F36123EF300800A0FF6E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5176F36723EF306200A0FF6E /* ETCarouSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ETCarouSwift.framework; sourceTree = "<group>"; };
+		F31616572F29F7C500010E25 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5176F36923EF307000A0FF6E /* ETCarouSwift.framework in Frameworks */,
+				F316165B2F2B37E000010E25 /* ETCarouSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,7 +49,6 @@
 		5176F34723EF300600A0FF6E = {
 			isa = PBXGroup;
 			children = (
-				5176F36723EF306200A0FF6E /* ETCarouSwift.framework */,
 				5176F35223EF300600A0FF6E /* ETCarouSwiftDemo */,
 				5176F35123EF300600A0FF6E /* Products */,
 			);
@@ -73,11 +65,9 @@
 		5176F35223EF300600A0FF6E /* ETCarouSwiftDemo */ = {
 			isa = PBXGroup;
 			children = (
-				5176F35323EF300600A0FF6E /* AppDelegate.swift */,
-				5176F35523EF300600A0FF6E /* SceneDelegate.swift */,
-				5176F35923EF300600A0FF6E /* Main.storyboard */,
+				F31616572F29F7C500010E25 /* ContentView.swift */,
+				5176F35323EF300600A0FF6E /* ETCarouSwiftDemoApp.swift */,
 				5176F35C23EF300800A0FF6E /* Assets.xcassets */,
-				5176F35E23EF300800A0FF6E /* LaunchScreen.storyboard */,
 				5176F36123EF300800A0FF6E /* Info.plist */,
 			);
 			path = ETCarouSwiftDemo;
@@ -100,6 +90,9 @@
 			dependencies = (
 			);
 			name = ETCarouSwiftDemo;
+			packageProductDependencies = (
+				F316165A2F2B37E000010E25 /* ETCarouSwift */,
+			);
 			productName = ETCarouSwiftDemo;
 			productReference = 5176F35023EF300600A0FF6E /* ETCarouSwiftDemo.app */;
 			productType = "com.apple.product-type.application";
@@ -128,6 +121,9 @@
 				Base,
 			);
 			mainGroup = 5176F34723EF300600A0FF6E;
+			packageReferences = (
+				F31616592F2B37E000010E25 /* XCLocalSwiftPackageReference "../../ETCarouSwift" */,
+			);
 			productRefGroup = 5176F35123EF300600A0FF6E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -142,9 +138,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5176F36023EF300800A0FF6E /* LaunchScreen.storyboard in Resources */,
 				5176F35D23EF300800A0FF6E /* Assets.xcassets in Resources */,
-				5176F35B23EF300600A0FF6E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -155,31 +149,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5176F35423EF300600A0FF6E /* AppDelegate.swift in Sources */,
-				5176F35623EF300600A0FF6E /* SceneDelegate.swift in Sources */,
+				5176F35423EF300600A0FF6E /* ETCarouSwiftDemoApp.swift in Sources */,
+				F31616582F29F7C500010E25 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		5176F35923EF300600A0FF6E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5176F35A23EF300600A0FF6E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		5176F35E23EF300800A0FF6E /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5176F35F23EF300800A0FF6E /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		5176F36223EF300800A0FF6E /* Debug */ = {
@@ -363,6 +338,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		F31616592F2B37E000010E25 /* XCLocalSwiftPackageReference "../../ETCarouSwift" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../ETCarouSwift;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F316165A2F2B37E000010E25 /* ETCarouSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ETCarouSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5176F34823EF300600A0FF6E /* Project object */;
 }

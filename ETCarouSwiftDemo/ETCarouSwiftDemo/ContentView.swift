@@ -12,12 +12,12 @@ import ETCarouSwift
 struct ContentView: View {
     @State private var currentImageIndex: Int = 0
     
-    let images: [UIImage] = [
-        UIImage(named: "1")!,
-        UIImage(named: "2")!,
-        UIImage(named: "3")!,
-        UIImage(named: "4")!,
-        UIImage(named: "5")!
+    let images: [Image] = [
+        Image("1"),
+        Image("2"),
+        Image("3"),
+        Image("4"),
+        Image("5")
     ]
     
     var body: some View {

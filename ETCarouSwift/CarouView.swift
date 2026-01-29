@@ -24,8 +24,9 @@ public enum CarouDotSize: CGFloat {
 }
 
 public struct CarouView: View {
-    /// Display page index in extended array: [copyOfLast, 0, 1, ..., n-1, copyOfFirst]. Start at 1 (first original).
-    @State private var pageIndex: Int = 1
+    /// Continuous scroll position (page units): 1 = first original, animatable for same slide as swipe.
+    @State private var scrollOffset: CGFloat = 1
+    @State private var dragOffset: CGFloat = 0
     @State private var timer: Timer?
     @State private var isUserInteracting: Bool = false
     
@@ -79,65 +80,82 @@ public struct CarouView: View {
                             onImageTapped?(0)
                         }
                 } else {
-                    // Multiple images - UIKit-style infinite carousel: [copyOfLast, 0, 1, ..., n-1, copyOfFirst]
+                    // Custom offset-based carousel: [copyOfLast, 0, 1, ..., n-1, copyOfFirst] — same slide for swipe and auto-ride
                     let count = images.count
                     let totalPages = count + 2
-                    TabView(selection: $pageIndex) {
-                        ForEach(0..<totalPages, id: \.self) { p in
-                            imageForPage(p, count: count)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: geometry.size.width, height: geometry.size.height)
-                                .clipped()
-                                .tag(p)
-                                .onTapGesture {
-                                    onImageTapped?(logicalIndex(for: p, count: count))
+                    let pageWidth = geometry.size.width
+                    let effectiveOffset = scrollOffset - dragOffset / pageWidth
+                    let visiblePage = max(0, min(CGFloat(totalPages - 1), effectiveOffset))
+                    let currentLogical = logicalIndex(for: Int(round(visiblePage)), count: count)
+                    
+                    ZStack(alignment: .bottom) {
+                        // Strip: full width, then offset; frame(alignment: .leading) so visible window is [0, pageWidth] over strip
+                        HStack(spacing: 0) {
+                            ForEach(0..<totalPages, id: \.self) { p in
+                                imageForPage(p, count: count)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: pageWidth, height: geometry.size.height)
+                                    .clipped()
+                                    .contentShape(Rectangle())
+                                    .onTapGesture {
+                                        onImageTapped?(logicalIndex(for: p, count: count))
+                                    }
+                            }
+                        }
+                        .frame(width: CGFloat(totalPages) * pageWidth, height: geometry.size.height)
+                        .fixedSize(horizontal: true, vertical: false)
+                        .offset(x: -scrollOffset * pageWidth + dragOffset)
+                        .frame(width: pageWidth, height: geometry.size.height, alignment: .leading)
+                        .clipped()
+                        .animation(.easeInOut(duration: 0.35), value: scrollOffset)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                    isUserInteracting = true
+                                    stopAutoRide()
+                                    dragOffset = value.translation.width
                                 }
-                        }
-                    }
-                    .tabViewStyle(.page(indexDisplayMode: .never))
-                    .indexViewStyle(.page(backgroundDisplayMode: .never))
-                    .animation(.easeInOut(duration: 0.35), value: pageIndex)
-                    .onChange(of: pageIndex) { newPage in
-                        // Seamless wraparound: jump from copy to original with same easeInOut so it doesn't catch the eye
-                        if newPage == totalPages - 1 {
-                            withAnimation(.easeInOut(duration: 0.35)) {
-                                pageIndex = 1
-                            }
-                            return
-                        }
-                        if newPage == 0 {
-                            withAnimation(.easeInOut(duration: 0.35)) {
-                                pageIndex = count
-                            }
-                            return
-                        }
-                        if !isUserInteracting {
-                            onImageChanged?(logicalIndex(for: newPage, count: count))
-                        }
-                    }
-                    .simultaneousGesture(
-                        DragGesture()
-                            .onChanged { _ in
-                                isUserInteracting = true
-                                stopAutoRide()
-                            }
-                            .onEnded { _ in
-                                isUserInteracting = false
-                                if autoRideEnabled { startAutoRide() }
-                            }
-                    )
-                    .overlay(alignment: .bottom) {
+                                .onEnded { value in
+                                    isUserInteracting = false
+                                    let effective = scrollOffset - dragOffset / pageWidth
+                                    var snap = Int(round(effective))
+                                    snap = max(0, min(totalPages - 1, snap))
+                                    let isWraparound = (snap == 0 || snap == totalPages - 1)
+                                    if snap == 0 { snap = count }
+                                    else if snap == totalPages - 1 { snap = 1 }
+                                    if isWraparound {
+                                        // Instant jump: copy and original show same image, so no animation
+                                        var t = Transaction()
+                                        t.disablesAnimations = true
+                                        withTransaction(t) {
+                                            scrollOffset = CGFloat(snap)
+                                            dragOffset = 0
+                                        }
+                                    } else {
+                                        withAnimation(.easeInOut(duration: 0.35)) {
+                                            scrollOffset = CGFloat(snap)
+                                            dragOffset = 0
+                                        }
+                                    }
+                                    onImageChanged?(logicalIndex(for: snap, count: count))
+                                    if autoRideEnabled { startAutoRide() }
+                                }
+                        )
+                        
                         CarouPageControl(
                             numberOfPages: count,
-                            currentPage: logicalIndex(for: pageIndex, count: count),
+                            currentPage: currentLogical,
                             dotColor: dotColor,
                             currentDotColor: currentDotColor,
                             dotSize: dotSize
                         )
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .frame(height: geometry.size.height * 0.25)
                         .padding(.bottom, geometry.size.height * 0.05)
                     }
+                    .frame(width: pageWidth, height: geometry.size.height)
+                    .clipped()
                 }
             }
         }
@@ -160,28 +178,42 @@ public struct CarouView: View {
     
     /// Logical index 0..count-1 for callbacks and page control
     private func logicalIndex(for page: Int, count: Int) -> Int {
-        if page == 0 { return count - 1 }
-        if page == count + 1 { return 0 }
-        return page - 1
+        if page <= 0 { return count - 1 }
+        if page >= count + 1 { return 0 }
+        let logical = page - 1
+        return max(0, min(count - 1, logical))
     }
     
     private func startAutoRide() {
         stopAutoRide()
         let count = images.count
         let totalPages = count + 2
+        let duration: Double = 0.35
         timer = Timer.scheduledTimer(withTimeInterval: showTime, repeats: true) { _ in
             guard !isUserInteracting else { return }
             Task { @MainActor in
+                let currentPage = Int(round(scrollOffset))
                 let nextPage = rideDirection == .rightToLeft
-                    ? (pageIndex + 1) % totalPages
-                    : (pageIndex - 1 + totalPages) % totalPages
-                // Use same slide transition as user swipe (easeInOut so it looks identical)
-                withAnimation(.easeInOut(duration: 0.35)) {
-                    pageIndex = nextPage
+                    ? (currentPage + 1) % totalPages
+                    : (currentPage - 1 + totalPages) % totalPages
+                // Same slide transition as user swipe (animate scrollOffset)
+                withAnimation(.easeInOut(duration: duration)) {
+                    scrollOffset = CGFloat(nextPage)
                 }
-                // Only call here when stable; onChange handles jump and callback for 0 / totalPages-1
                 if nextPage >= 1 && nextPage <= count {
                     onImageChanged?(logicalIndex(for: nextPage, count: count))
+                } else {
+                    // Landed on copy; instant jump to original (same image = invisible, no backwards scroll)
+                    Task { @MainActor in
+                        try? await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
+                        let targetPage = nextPage == 0 ? count : 1
+                        var t = Transaction()
+                        t.disablesAnimations = true
+                        withTransaction(t) {
+                            scrollOffset = CGFloat(targetPage)
+                        }
+                        onImageChanged?(logicalIndex(for: targetPage, count: count))
+                    }
                 }
             }
         }
@@ -193,7 +225,7 @@ public struct CarouView: View {
     }
     
     public var carouIndex: Int {
-        logicalIndex(for: pageIndex, count: images.count)
+        logicalIndex(for: Int(round(scrollOffset)), count: images.count)
     }
 }
 

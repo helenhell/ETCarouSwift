@@ -47,7 +47,7 @@ public struct CarouView: View {
                     // Single image
                     images[0]
                         .resizable()
-                        .scaledToFill()
+                        .carouImageScale(configuration.imageScale)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .clipped()
                         .onTapGesture {
@@ -69,7 +69,7 @@ public struct CarouView: View {
                             ForEach(0..<totalPages, id: \.self) { p in
                                 imageForPage(p, count: count)
                                     .resizable()
-                                    .scaledToFill()
+                                    .carouImageScale(configuration.imageScale)
                                     .frame(width: pageWidth, height: geometry.size.height)
                                     .clipped()
                                     .contentShape(Rectangle())

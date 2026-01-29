@@ -2,7 +2,7 @@
 //  CarouViewConfiguration.swift
 //  ETCarouSwift
 //
-//  Created by Elena Slovushch on 31/01/2020.
+//  Created by Elena Slovushch on 29/01/2026.
 //  Copyright © 2020 ElenaSlovushch. All rights reserved.
 //
 
@@ -10,6 +10,14 @@ import SwiftUI
 
 public enum CarouDirection {
     case leftToRight, rightToLeft
+}
+
+/// How the carousel image is scaled within its frame.
+public enum CarouImageScale {
+    /// Scale to fill the frame; aspect ratio preserved, content may be clipped.
+    case fill
+    /// Scale to fit inside the frame; aspect ratio preserved, may show letterboxing.
+    case fit
 }
 
 /// Dot size expressed as a fraction of the carousel view width. Kept as an enum to restrict to valid options.
@@ -35,6 +43,8 @@ public struct CarouViewConfiguration {
     public let dotColor: Color
     public let currentDotColor: Color
     public let dotSize: CarouDotSize
+    /// How images are scaled within each slide. Default is `.fill`.
+    public let imageScale: CarouImageScale
     /// When non-nil, dot size is a fraction of this width. When nil, absolute point sizes are used.
     public let viewWidth: CGFloat?
     
@@ -47,6 +57,7 @@ public struct CarouViewConfiguration {
         dotColor: Color = .white,
         currentDotColor: Color = .black,
         dotSize: CarouDotSize = .small,
+        imageScale: CarouImageScale = .fill,
         viewWidth: CGFloat? = nil
     ) {
         self.rideDirection = rideDirection
@@ -55,6 +66,7 @@ public struct CarouViewConfiguration {
         self.dotColor = dotColor
         self.currentDotColor = currentDotColor
         self.dotSize = dotSize
+        self.imageScale = imageScale
         self.viewWidth = viewWidth
         dotSizePoints = Self.dotSizeInPoints(dotSize: dotSize, viewWidth: viewWidth)
     }
@@ -68,6 +80,7 @@ public struct CarouViewConfiguration {
             dotColor: dotColor,
             currentDotColor: currentDotColor,
             dotSize: dotSize,
+            imageScale: imageScale,
             viewWidth: viewWidth
         )
     }

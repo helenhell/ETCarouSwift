@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		515CBB5F23E46B750083C352 /* CarouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB5E23E46B750083C352 /* CarouView.swift */; };
+		515CBB6023E46B750083C353 /* CarouImageScaleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB6123E46B750083C353 /* CarouImageScaleModifier.swift */; };
+		515CBB6223E46B750083C354 /* CarouViewConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB6323E46B750083C354 /* CarouViewConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		515CBB4F23E46A510083C352 /* ETCarouSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ETCarouSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		515CBB5323E46A510083C352 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		515CBB5E23E46B750083C352 /* CarouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouView.swift; sourceTree = "<group>"; };
+		515CBB6123E46B750083C353 /* CarouImageScaleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouImageScaleModifier.swift; sourceTree = "<group>"; };
+		515CBB6323E46B750083C354 /* CarouViewConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouViewConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +52,8 @@
 			children = (
 				515CBB5323E46A510083C352 /* Info.plist */,
 				515CBB5E23E46B750083C352 /* CarouView.swift */,
+				515CBB6123E46B750083C353 /* CarouImageScaleModifier.swift */,
+				515CBB6323E46B750083C354 /* CarouViewConfiguration.swift */,
 			);
 			path = ETCarouSwift;
 			sourceTree = "<group>";
@@ -133,6 +139,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				515CBB5F23E46B750083C352 /* CarouView.swift in Sources */,
+				515CBB6023E46B750083C353 /* CarouImageScaleModifier.swift in Sources */,
+				515CBB6223E46B750083C354 /* CarouViewConfiguration.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

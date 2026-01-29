@@ -24,12 +24,14 @@ struct ContentView: View {
         VStack(spacing: 20) {
             CarouView(
                 imageSet: images,
-                rideDirection: .rightToLeft,
-                autoRideEnabled: true,
-                showTime: 2.0,
-                dotColor: .gray,
-                currentDotColor: .blue,
-                dotSize: .medium,
+                configuration: CarouViewConfiguration(
+                    rideDirection: .rightToLeft,
+                    autoRideEnabled: true,
+                    showTime: 2.0,
+                    dotColor: .gray,
+                    currentDotColor: .blue,
+                    dotSize: .medium
+                ),
                 onImageChanged: { index in
                     currentImageIndex = index
                     print("Image changed to index: \(index)")

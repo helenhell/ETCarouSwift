@@ -13,16 +13,6 @@ public protocol CarouViewDelegate: AnyObject {
     func carouView(_ carouView: CarouView, didTapImageAt index: Int)
 }
 
-public enum CarouDirection {
-    case leftToRight, rightToLeft
-}
-
-public enum CarouDotSize: CGFloat {
-    case small = 1.0
-    case medium = 1.5
-    case large = 2.0
-}
-
 public struct CarouView: View {
     /// Continuous scroll position (page units): 1 = first original, animatable for same slide as swipe.
     @State private var scrollOffset: CGFloat = 1
@@ -31,34 +21,18 @@ public struct CarouView: View {
     @State private var isUserInteracting: Bool = false
     
     private let images: [Image]
-    private let rideDirection: CarouDirection
-    private let autoRideEnabled: Bool
-    private let showTime: Double
-    private let dotColor: Color
-    private let currentDotColor: Color
-    private let dotSize: CarouDotSize
-    
+    private let configuration: CarouViewConfiguration
     private let onImageChanged: ((Int) -> Void)?
     private let onImageTapped: ((Int) -> Void)?
     
     public init(
         imageSet: [Image],
-        rideDirection: CarouDirection = .rightToLeft,
-        autoRideEnabled: Bool = true,
-        showTime: Double = 2.0,
-        dotColor: Color = .white,
-        currentDotColor: Color = .black,
-        dotSize: CarouDotSize = .small,
+        configuration: CarouViewConfiguration = CarouViewConfiguration(),
         onImageChanged: ((Int) -> Void)? = nil,
         onImageTapped: ((Int) -> Void)? = nil
     ) {
         self.images = imageSet
-        self.rideDirection = rideDirection
-        self.autoRideEnabled = autoRideEnabled
-        self.showTime = showTime
-        self.dotColor = dotColor
-        self.currentDotColor = currentDotColor
-        self.dotSize = dotSize
+        self.configuration = configuration
         self.onImageChanged = onImageChanged
         self.onImageTapped = onImageTapped
     }
@@ -108,13 +82,20 @@ public struct CarouView: View {
                         .offset(x: -scrollOffset * pageWidth + dragOffset)
                         .frame(width: pageWidth, height: geometry.size.height, alignment: .leading)
                         .clipped()
+                        .transaction { t in
+                            if isUserInteracting { t.animation = nil; t.disablesAnimations = true }
+                        }
                         .animation(.easeInOut(duration: 0.35), value: scrollOffset)
                         .gesture(
-                            DragGesture()
+                            DragGesture(minimumDistance: 0)
                                 .onChanged { value in
                                     isUserInteracting = true
                                     stopAutoRide()
-                                    dragOffset = value.translation.width
+                                    var t = Transaction()
+                                    t.disablesAnimations = true
+                                    withTransaction(t) {
+                                        dragOffset = value.translation.width
+                                    }
                                 }
                                 .onEnded { value in
                                     isUserInteracting = false
@@ -125,10 +106,9 @@ public struct CarouView: View {
                                     if snap == 0 { snap = count }
                                     else if snap == totalPages - 1 { snap = 1 }
                                     if isWraparound {
-                                        // Instant jump: copy and original show same image, so no animation
-                                        var t = Transaction()
-                                        t.disablesAnimations = true
-                                        withTransaction(t) {
+                                        // Edge: longer duration + more pronounced easeInOut (slower start/end)
+                                        let edgeAnimation = Animation.timingCurve(0.33, 0, 0.67, 1, duration: 0.6)
+                                        withAnimation(edgeAnimation) {
                                             scrollOffset = CGFloat(snap)
                                             dragOffset = 0
                                         }
@@ -139,16 +119,16 @@ public struct CarouView: View {
                                         }
                                     }
                                     onImageChanged?(logicalIndex(for: snap, count: count))
-                                    if autoRideEnabled { startAutoRide() }
+                                    if configuration.autoRideEnabled { startAutoRide() }
                                 }
                         )
                         
                         CarouPageControl(
                             numberOfPages: count,
                             currentPage: currentLogical,
-                            dotColor: dotColor,
-                            currentDotColor: currentDotColor,
-                            dotSize: dotSize
+                            dotColor: configuration.dotColor,
+                            currentDotColor: configuration.currentDotColor,
+                            dotSize: configuration.dotSize
                         )
                         .frame(maxWidth: .infinity, alignment: .center)
                         .frame(height: geometry.size.height * 0.25)
@@ -160,7 +140,7 @@ public struct CarouView: View {
             }
         }
         .onAppear {
-            if autoRideEnabled && images.count > 1 {
+            if configuration.autoRideEnabled && images.count > 1 {
                 startAutoRide()
             }
         }
@@ -189,11 +169,11 @@ public struct CarouView: View {
         let count = images.count
         let totalPages = count + 2
         let duration: Double = 0.35
-        timer = Timer.scheduledTimer(withTimeInterval: showTime, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: configuration.showTime, repeats: true) { _ in
             guard !isUserInteracting else { return }
             Task { @MainActor in
                 let currentPage = Int(round(scrollOffset))
-                let nextPage = rideDirection == .rightToLeft
+                let nextPage = configuration.rideDirection == .rightToLeft
                     ? (currentPage + 1) % totalPages
                     : (currentPage - 1 + totalPages) % totalPages
                 // Same slide transition as user swipe (animate scrollOffset)
@@ -255,22 +235,12 @@ extension CarouView {
     /// Convenience initializer for UIImage array (UIKit compatibility)
     public init(
         imageSet: [UIImage],
-        rideDirection: CarouDirection = .rightToLeft,
-        autoRideEnabled: Bool = true,
-        showTime: Double = 2.0,
-        dotColor: Color = .white,
-        currentDotColor: Color = .black,
-        dotSize: CarouDotSize = .small,
+        configuration: CarouViewConfiguration = CarouViewConfiguration(),
         onImageChanged: ((Int) -> Void)? = nil,
         onImageTapped: ((Int) -> Void)? = nil
     ) {
         self.images = imageSet.map { Image(uiImage: $0) }
-        self.rideDirection = rideDirection
-        self.autoRideEnabled = autoRideEnabled
-        self.showTime = showTime
-        self.dotColor = dotColor
-        self.currentDotColor = currentDotColor
-        self.dotSize = dotSize
+        self.configuration = configuration
         self.onImageChanged = onImageChanged
         self.onImageTapped = onImageTapped
     }

@@ -58,6 +58,7 @@ public struct CarouView: View {
                     let count = images.count
                     let totalPages = count + 2
                     let pageWidth = geometry.size.width
+                    let resolvedConfig = configuration.with(viewWidth: pageWidth)
                     let effectiveOffset = scrollOffset - dragOffset / pageWidth
                     let visiblePage = max(0, min(CGFloat(totalPages - 1), effectiveOffset))
                     let currentLogical = logicalIndex(for: Int(round(visiblePage)), count: count)
@@ -128,7 +129,7 @@ public struct CarouView: View {
                             currentPage: currentLogical,
                             dotColor: configuration.dotColor,
                             currentDotColor: configuration.currentDotColor,
-                            dotSize: configuration.dotSize
+                            dotSizePoints: resolvedConfig.dotSizePoints
                         )
                         .frame(maxWidth: .infinity, alignment: .center)
                         .frame(height: geometry.size.height * 0.25)
@@ -215,14 +216,14 @@ struct CarouPageControl: View {
     let currentPage: Int
     let dotColor: Color
     let currentDotColor: Color
-    let dotSize: CarouDotSize
+    let dotSizePoints: CGFloat
     
     var body: some View {
         HStack(spacing: 8) {
             ForEach(0..<numberOfPages, id: \.self) { index in
                 Circle()
                     .fill(index == currentPage ? currentDotColor : dotColor)
-                    .frame(width: 8 * dotSize.rawValue, height: 8 * dotSize.rawValue)
+                    .frame(width: dotSizePoints, height: dotSizePoints)
                     .scaleEffect(index == currentPage ? 1.2 : 1.0)
                     .animation(.spring(response: 0.3), value: currentPage)
             }

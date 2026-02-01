@@ -17,6 +17,7 @@ enum CarouselDemoMode: String, CaseIterable {
 struct ConfigurationView: View {
     // MARK: - Mode
     @State private var carouselMode: CarouselDemoMode = .basic
+    @State private var dataSetSize: DemoDataSetSize = .small
     
     // MARK: - Behavior (shared)
     @State private var rideDirection: CarouDirection = .leftToRight
@@ -113,6 +114,13 @@ struct ConfigurationView: View {
                     }
                 }
                 .pickerStyle(.segmented)
+
+                Picker("Data set", selection: $dataSetSize) {
+                    ForEach(DemoDataSetSize.allCases, id: \.self) { size in
+                        Text(size.rawValue).tag(size)
+                    }
+                }
+                .pickerStyle(.menu)
             }
 
             Section("Direction & Auto-ride") {
@@ -293,7 +301,7 @@ struct ConfigurationView: View {
         .navigationTitle("Carousel Config")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $showDemo) {
-            CarouselDemoView(configuration: builtConfiguration, mode: carouselMode)
+            CarouselDemoView(configuration: builtConfiguration, mode: carouselMode, dataSetSize: dataSetSize)
         }
     }
 }

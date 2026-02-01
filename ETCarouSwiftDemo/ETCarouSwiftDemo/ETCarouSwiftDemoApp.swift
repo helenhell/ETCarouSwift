@@ -12,7 +12,9 @@ import SwiftUI
 struct ETCarouSwiftDemoApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationStack {
+                ConfigurationView()
+            }
         }
     }
 }

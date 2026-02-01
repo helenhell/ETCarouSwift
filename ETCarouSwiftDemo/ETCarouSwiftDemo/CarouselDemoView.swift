@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  CarouselDemoView.swift
 //  ETCarouSwiftDemo
 //
 //  Created by Elena Slovushch on 08/02/2020.
@@ -9,39 +9,15 @@
 import SwiftUI
 import ETCarouSwift
 
-/// Demo screen that shows the carousel with the given configuration and mode (basic or enriched).
+/// Demo screen that shows the carousel with the given configuration, mode (basic or enriched), and data set size (small = dots, big = text page control).
 struct CarouselDemoView: View {
     let configuration: CarouViewConfiguration
     let mode: CarouselDemoMode
+    let dataSetSize: DemoDataSetSize
     @State private var currentIndex: Int = 0
 
-    private let images: [Image] = [
-        Image("1"),
-        Image("2"),
-        Image("3"),
-        Image("4"),
-        Image("5"),
-        Image("6")
-    ]
-
-    private let enrichedItems: [CarouItem] = [
-        CarouItem(image: Image("f1"), title: "Spring Bloom", description: "Fresh petals opening to the morning sun."),
-        CarouItem(image: Image("f2"), title: "Garden Rose", description: "Classic beauty in full bloom."),
-        CarouItem(image: Image("f3"), title: "Wildflower Meadow", description: "A tapestry of color in the grass."),
-        CarouItem(image: Image("f4"), title: "Summer Bouquet", description: "Bright and cheerful summer flowers."),
-        CarouItem(image: Image("f5"), title: "Petal Close-Up", description: "Delicate details up close."),
-        CarouItem(image: Image("f6"), title: "Lavender Field", description: "Soft purple hues and gentle fragrance."),
-        CarouItem(image: Image("f7"), title: "Dahlia", description: "Bold and layered petals."),
-        CarouItem(image: Image("f8"), title: "Floral Arrangement", description: "Elegant mix of blooms."),
-        CarouItem(image: Image("f9"), title: "Poppy", description: "Vibrant and delicate."),
-        CarouItem(image: Image("f10"), title: "Garden Path", description: "Flowers lining the way."),
-        CarouItem(image: Image("f11"), title: "Peony", description: "Lush and romantic."),
-        CarouItem(image: Image("f12"), title: "Sunflower", description: "Bright face turned to the sky."),
-        CarouItem(image: Image("f13"), title: "Tulip", description: "Graceful curves and bold color."),
-        CarouItem(image: Image("f14"), title: "Orchid", description: "Exotic and refined."),
-        CarouItem(image: Image("f15"), title: "Floral Still Life", description: "A moment of natural beauty."),
-        CarouItem(image: Image("f16"), title: "Garden View", description: "Another glimpse of floral beauty."),
-    ]
+    private var images: [Image] { DemoData.basicImages(for: dataSetSize) }
+    private var enrichedItems: [CarouItem] { DemoData.enrichedItems(for: dataSetSize) }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -76,28 +52,27 @@ struct CarouselDemoView: View {
     }
 }
 
-/// Root content: configuration screen (entry point for the demo app).
-struct ContentView: View {
-    var body: some View {
-        NavigationStack {
-            ConfigurationView()
-        }
+#Preview("Demo Basic - Small") {
+    NavigationStack {
+        CarouselDemoView(configuration: CarouViewConfiguration(), mode: .basic, dataSetSize: .small)
     }
 }
 
-#Preview("Configuration") {
-    ContentView()
-}
-
-#Preview("Demo Basic") {
+#Preview("Demo Basic - Big (text page control)") {
     NavigationStack {
-        CarouselDemoView(configuration: CarouViewConfiguration(), mode: .basic)
+        CarouselDemoView(configuration: CarouViewConfiguration(), mode: .basic, dataSetSize: .big)
     }
 }
 
-#Preview("Demo Enriched - Default") {
+#Preview("Demo Enriched - Small") {
     NavigationStack {
-        CarouselDemoView(configuration: CarouViewConfiguration(), mode: .enriched)
+        CarouselDemoView(configuration: CarouViewConfiguration(), mode: .enriched, dataSetSize: .small)
+    }
+}
+
+#Preview("Demo Enriched - Big (text page control)") {
+    NavigationStack {
+        CarouselDemoView(configuration: CarouViewConfiguration(), mode: .enriched, dataSetSize: .big)
     }
 }
 
@@ -120,9 +95,9 @@ struct ContentView: View {
         enrichedLayout: layout,
         enrichedAppearance: enrichedAppearance
     )
-    
+
     return NavigationStack {
-        CarouselDemoView(configuration: config, mode: .enriched)
+        CarouselDemoView(configuration: config, mode: .enriched, dataSetSize: .small)
     }
 }
 
@@ -144,8 +119,8 @@ struct ContentView: View {
         behavior: behavior,
         enrichedAppearance: enrichedAppearance
     )
-    
+
     return NavigationStack {
-        CarouselDemoView(configuration: config, mode: .enriched)
+        CarouselDemoView(configuration: config, mode: .enriched, dataSetSize: .small)
     }
 }

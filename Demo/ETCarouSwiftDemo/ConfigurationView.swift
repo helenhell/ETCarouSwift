@@ -14,12 +14,26 @@ enum CarouselDemoMode: String, CaseIterable {
     case enriched = "Enriched"
 }
 
+/// Font choice for enriched carousel text (title and description).
+enum CarouselDemoFont: String, CaseIterable {
+    case system = "System"
+    case nunito = "Nunito"
+}
+
 /// Value used for navigation to the demo screen (enables value-based navigationDestination).
-private struct DemoDestination: Identifiable {
+private struct DemoDestination: Identifiable, Hashable {
     let id = UUID()
     let configuration: CarouViewConfiguration
     let mode: CarouselDemoMode
     let dataSetSize: DemoDataSetSize
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    static func == (lhs: DemoDestination, rhs: DemoDestination) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 struct ConfigurationView: View {
@@ -43,6 +57,7 @@ struct ConfigurationView: View {
     @State private var textPosition: TextPosition = .stacked
     
     // MARK: - Enriched Text Appearance
+    @State private var textFont: CarouselDemoFont = .system
     @State private var textAlignment: TextAlignment = .leading
     @State private var titleColor: Color = .primary
     @State private var descriptionColor: Color = .secondary
@@ -81,16 +96,19 @@ struct ConfigurationView: View {
             textPosition: textPosition
         )
         
+        let (titleFontName, fontBundle): (String?, Bundle?) = textFont == .nunito
+            ? ("Nunito-Regular", .main)
+            : (nil, nil)
         let viewAppearance = EnrichedCarouViewAppearance(
             textAlignment: textAlignment,
             titleColor: titleColor,
             descriptionColor: descriptionColor,
-            titleFontName: nil,
+            titleFontName: titleFontName,
             titleFontSize: titleFontSize,
-            titleFontBundle: nil,
-            descriptionFontName: nil,
+            titleFontBundle: fontBundle,
+            descriptionFontName: titleFontName,
             descriptionFontSize: descriptionFontSize,
-            descriptionFontBundle: nil,
+            descriptionFontBundle: fontBundle,
             cardInset: cardInset,
             imageBorderWidth: imageBorderEnabled ? imageBorderWidth : 0,
             imageBorderColor: imageBorderColor,
@@ -190,6 +208,13 @@ struct ConfigurationView: View {
                 }
                 
                 Section("Text Style (Enriched)") {
+                    Picker("Text font", selection: $textFont) {
+                        ForEach(CarouselDemoFont.allCases, id: \.self) { font in
+                            Text(font.rawValue).tag(font)
+                        }
+                    }
+                    .pickerStyle(.menu)
+                    
                     Picker("Text alignment", selection: $textAlignment) {
                         Text("Leading").tag(TextAlignment.leading)
                         Text("Center").tag(TextAlignment.center)
@@ -281,8 +306,11 @@ struct ConfigurationView: View {
                     Toggle("Enable shadow", isOn: $shadowEnabled)
                 }
             }
-
-            Section {
+        }
+        .navigationTitle("Carousel Config")
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
                 Button {
                     demoDestination = DemoDestination(
                         configuration: builtConfiguration,
@@ -290,28 +318,11 @@ struct ConfigurationView: View {
                         dataSetSize: dataSetSize
                     )
                 } label: {
-                    HStack {
-                        Spacer()
-                        Text("Launch Demo")
-                            .font(.headline)
-                            .foregroundStyle(.white)
-                        Image(systemName: "chevron.right")
-                            .font(.body.weight(.semibold))
-                            .foregroundStyle(.white)
-                        Spacer()
-                    }
-                    .padding(.vertical, 12)
+                    Label("Launch Demo", systemImage: "play.fill")
                 }
-                .listRowBackground(
-                    Rectangle()
-                        .fill(Color.blue)
-                        .ignoresSafeArea(edges: .horizontal)
-                )
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .buttonStyle(.borderedProminent)
             }
         }
-        .navigationTitle("Carousel Config")
-        .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(item: $demoDestination) { dest in
             CarouselDemoView(configuration: dest.configuration, mode: dest.mode, dataSetSize: dest.dataSetSize)
         }

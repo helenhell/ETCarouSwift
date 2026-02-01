@@ -11,8 +11,8 @@ import ETCarouSwift
 
 /// Data set size for the demo: small shows dot page control, big shows text page control (e.g. "3 / 16").
 enum DemoDataSetSize: String, CaseIterable {
-    case small = "Small (dots)"
-    case big = "Big (text)"
+    case small = "Small (dots page control)"
+    case big = "Big (text page control)"
 }
 
 enum DemoData {

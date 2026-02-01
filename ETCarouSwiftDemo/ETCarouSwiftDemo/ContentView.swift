@@ -64,10 +64,6 @@ struct CarouselDemoView: View {
                 }
             }
             .frame(height: mode == .enriched ? 380 : 300)
-            .overlay(
-                RoundedRectangle(cornerRadius: 0)
-                    .stroke(Color.gray.opacity(0.5), lineWidth: 2)
-            )
             .padding(.horizontal, 20)
 
             Text(mode == .basic ? "Image #\(currentIndex + 1)" : "Item #\(currentIndex + 1)")

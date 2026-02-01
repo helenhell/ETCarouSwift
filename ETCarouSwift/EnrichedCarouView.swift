@@ -26,10 +26,9 @@ struct EnrichedCarouView: View {
     // Layout helpers
     private var layout: EnrichedCarouLayout { configuration.enrichedLayout }
     private var viewAppearance: EnrichedCarouViewAppearance { configuration.enrichedAppearance.view }
-    private var insets: EdgeInsets { viewAppearance.imageBackgroundInset }
+    private var cardInset: CGFloat { viewAppearance.cardInset }
     private var hasCardAppearance: Bool {
-        insets.top > 0 || insets.leading > 0 || insets.trailing > 0 ||
-        viewAppearance.backgroundCornerRadius > 0 || viewAppearance.backgroundShadow != nil
+        cardInset > 0 || viewAppearance.backgroundCornerRadius > 0 || viewAppearance.backgroundShadow != nil
     }
 
     init(
@@ -47,30 +46,42 @@ struct EnrichedCarouView: View {
         _scrollOffset = State(initialValue: initialPage)
     }
 
+    /// Inner height after card inset (top only); used so inset is uniform and no extra top when cardInset = 0.
+    private static let pageControlRowHeight: CGFloat = 32
+    /// Fixed height for text block (title 1 line + description 2 lines + padding) so image position stays fixed.
+    private static let textBlockHeight: CGFloat = 72
+    
+    /// Returns a value safe for use in frame dimensions (avoids negative or non-finite).
+    private static func safeFrameDimension(_ value: CGFloat, minimum: CGFloat = 1) -> CGFloat {
+        guard value.isFinite, value >= minimum else { return minimum }
+        return value
+    }
+
     var body: some View {
         GeometryReader { geometry in
-            let pageWidth = geometry.size.width
-            let availableWidth = pageWidth - insets.leading - insets.trailing
+            let pageWidth = Self.safeFrameDimension(geometry.size.width)
+            let totalHeight = Self.safeFrameDimension(geometry.size.height)
+            // When cardInset > 0, inner content lives in (pageWidth - 2*cardInset) x (totalHeight - cardInset); padding applied once so top = sides.
+            let innerWidth = Self.safeFrameDimension(pageWidth - cardInset * 2)
+            let innerHeight = Self.safeFrameDimension(totalHeight - cardInset)
             
-            // Calculate heights based on layout mode
             let isTextOverlay = layout.textPosition == .overlay
             let isPageControlOverlay = layout.pageControlPosition == .overlay
+            let pageControlHeight: CGFloat = Self.pageControlRowHeight + 4
             
-            // When stacked: image takes ~55%, rest for page control + text
-            // When overlay: image takes full height minus top inset
-            let stackedTextAreaHeight: CGFloat = 100  // Fixed area for stacked text
-            let pageControlHeight: CGFloat = 44  // Page control row height
-            
+            let stackedBottomHeight = Self.pageControlRowHeight + 4 + Self.textBlockHeight
             let imageHeight: CGFloat = {
+                let raw: CGFloat
                 if isTextOverlay && isPageControlOverlay {
-                    return geometry.size.height - insets.top - (viewAppearance.bottomInsetFollowsContent ? 0 : insets.bottom)
+                    raw = innerHeight
                 } else if isTextOverlay {
-                    return geometry.size.height - insets.top - pageControlHeight
+                    raw = innerHeight - pageControlHeight
                 } else if isPageControlOverlay {
-                    return geometry.size.height * 0.55 - insets.top
+                    raw = innerHeight - Self.textBlockHeight
                 } else {
-                    return geometry.size.height * 0.55 - insets.top
+                    raw = innerHeight - stackedBottomHeight
                 }
+                return Self.safeFrameDimension(raw)
             }()
 
             ZStack {
@@ -80,14 +91,18 @@ struct EnrichedCarouView: View {
                     singleItemView(
                         item: items[0],
                         pageWidth: pageWidth,
-                        availableWidth: availableWidth,
+                        totalHeight: totalHeight,
+                        innerWidth: innerWidth,
+                        innerHeight: innerHeight,
                         imageHeight: imageHeight,
                         geometry: geometry
                     )
                 } else {
                     multiItemView(
                         pageWidth: pageWidth,
-                        availableWidth: availableWidth,
+                        totalHeight: totalHeight,
+                        innerWidth: innerWidth,
+                        innerHeight: innerHeight,
                         imageHeight: imageHeight,
                         geometry: geometry
                     )
@@ -105,42 +120,45 @@ struct EnrichedCarouView: View {
     private func singleItemView(
         item: CarouItem,
         pageWidth: CGFloat,
-        availableWidth: CGFloat,
+        totalHeight: CGFloat,
+        innerWidth: CGFloat,
+        innerHeight: CGFloat,
         imageHeight: CGFloat,
         geometry: GeometryProxy
     ) -> some View {
         let resolvedConfig = configuration.with(viewWidth: pageWidth)
         
-        return cardWrapper(pageWidth: pageWidth, height: geometry.size.height) {
-            contentLayout(
-                imageContent: {
-                    item.image
-                        .resizable()
-                        .carouImageScale(configuration.imageScale)
-                        .frame(width: availableWidth, height: imageHeight)
-                        .applyImageFrame(appearance: viewAppearance)
-                        .clipped()
-                },
-                pageControl: {
-                    CarouPageControl(
-                        numberOfPages: 1,
-                        currentPage: 0,
-                        dotColor: configuration.dotColor,
-                        currentDotColor: configuration.currentDotColor,
-                        dotSizePoints: resolvedConfig.dotSizePoints,
-                        direction: configuration.rideDirection,
-                        dotSize: configuration.dotSize,
-                        textFont: descriptionFont,
-                        textColor: viewAppearance.descriptionColor
-                    )
-                },
-                textBlock: {
-                    titleDescriptionBlock(item: item, pageWidth: availableWidth)
-                },
-                imageHeight: imageHeight,
-                availableWidth: availableWidth,
-                totalHeight: geometry.size.height
-            )
+        return cardWrapper(pageWidth: pageWidth, height: totalHeight) {
+            contentWithInset(innerWidth: innerWidth, innerHeight: innerHeight) {
+                contentLayout(
+                    imageContent: {
+                        item.image
+                            .resizable()
+                            .carouImageScale(configuration.imageScale)
+                            .frame(width: innerWidth, height: imageHeight)
+                            .applyImageBorder(appearance: viewAppearance)
+                            .clipped()
+                    },
+                    pageControl: {
+                        CarouPageControl(
+                            numberOfPages: 1,
+                            currentPage: 0,
+                            dotColor: configuration.dotColor,
+                            currentDotColor: configuration.currentDotColor,
+                            dotSizePoints: resolvedConfig.dotSizePoints,
+                            direction: configuration.rideDirection,
+                            dotSize: configuration.dotSize,
+                            textFont: descriptionFont
+                        )
+                    },
+                    textBlock: {
+                        titleDescriptionBlock(item: item, pageWidth: innerWidth)
+                    },
+                    imageHeight: imageHeight,
+                    innerWidth: innerWidth,
+                    innerHeight: innerHeight
+                )
+            }
             .onTapGesture { onItemTapped?(0) }
         }
     }
@@ -149,50 +167,66 @@ struct EnrichedCarouView: View {
     
     private func multiItemView(
         pageWidth: CGFloat,
-        availableWidth: CGFloat,
+        totalHeight: CGFloat,
+        innerWidth: CGFloat,
+        innerHeight: CGFloat,
         imageHeight: CGFloat,
         geometry: GeometryProxy
     ) -> some View {
         let count = items.count
         let totalPages = count + 2
         let resolvedConfig = configuration.with(viewWidth: pageWidth)
-        let effectiveOffset = scrollOffset - dragOffset / availableWidth
+        let effectiveOffset = scrollOffset - dragOffset / innerWidth
         let visiblePage = max(0, min(CGFloat(totalPages - 1), effectiveOffset))
         let currentLogical = logicalIndex(for: Int(round(visiblePage)), count: count, direction: configuration.rideDirection)
         
-        return cardWrapper(pageWidth: pageWidth, height: geometry.size.height) {
-            contentLayout(
-                imageContent: {
-                    imageStrip(
-                        count: count,
-                        totalPages: totalPages,
-                        availableWidth: availableWidth,
-                        imageHeight: imageHeight
-                    )
-                },
-                pageControl: {
-                    CarouPageControl(
-                        numberOfPages: count,
-                        currentPage: currentLogical,
-                        dotColor: configuration.dotColor,
-                        currentDotColor: configuration.currentDotColor,
-                        dotSizePoints: resolvedConfig.dotSizePoints,
-                        direction: configuration.rideDirection,
-                        dotSize: configuration.dotSize,
-                        textFont: descriptionFont,
-                        textColor: viewAppearance.descriptionColor
-                    )
-                },
-                textBlock: {
-                    titleDescriptionBlock(item: items[currentLogical], pageWidth: availableWidth)
-                        .id(currentLogical)
-                        .transition(.opacity)
-                        .animation(.easeIn(duration: 0.25), value: currentLogical)
-                },
-                imageHeight: imageHeight,
-                availableWidth: availableWidth,
-                totalHeight: geometry.size.height
-            )
+        return cardWrapper(pageWidth: pageWidth, height: totalHeight) {
+            contentWithInset(innerWidth: innerWidth, innerHeight: innerHeight) {
+                contentLayout(
+                    imageContent: {
+                        imageStrip(
+                            count: count,
+                            totalPages: totalPages,
+                            innerWidth: innerWidth,
+                            imageHeight: imageHeight
+                        )
+                    },
+                    pageControl: {
+                        CarouPageControl(
+                            numberOfPages: count,
+                            currentPage: currentLogical,
+                            dotColor: configuration.dotColor,
+                            currentDotColor: configuration.currentDotColor,
+                            dotSizePoints: resolvedConfig.dotSizePoints,
+                            direction: configuration.rideDirection,
+                            dotSize: configuration.dotSize,
+                            textFont: descriptionFont
+                        )
+                    },
+                    textBlock: {
+                        titleDescriptionBlock(item: items[currentLogical], pageWidth: innerWidth)
+                            .id(currentLogical)
+                            .transition(.opacity)
+                            .animation(.easeIn(duration: 0.25), value: currentLogical)
+                    },
+                    imageHeight: imageHeight,
+                    innerWidth: innerWidth,
+                    innerHeight: innerHeight
+                )
+            }
+        }
+    }
+    
+    /// Applies card inset once so top = leading = trailing; when cardInset = 0 no padding, content still framed to inner size.
+    @ViewBuilder
+    private func contentWithInset<Content: View>(innerWidth: CGFloat, innerHeight: CGFloat, @ViewBuilder content: () -> Content) -> some View {
+        let inner = content()
+            .frame(width: innerWidth, height: innerHeight)
+        if cardInset > 0 {
+            inner
+                .padding(EdgeInsets(top: cardInset, leading: cardInset, bottom: 0, trailing: cardInset))
+        } else {
+            inner
         }
     }
     
@@ -201,7 +235,7 @@ struct EnrichedCarouView: View {
     private func imageStrip(
         count: Int,
         totalPages: Int,
-        availableWidth: CGFloat,
+        innerWidth: CGFloat,
         imageHeight: CGFloat
     ) -> some View {
         HStack(spacing: 0) {
@@ -210,8 +244,8 @@ struct EnrichedCarouView: View {
                 items[idx].image
                     .resizable()
                     .carouImageScale(configuration.imageScale)
-                    .frame(width: availableWidth, height: imageHeight)
-                    .applyImageFrame(appearance: viewAppearance)
+                    .frame(width: innerWidth, height: imageHeight)
+                    .applyImageBorder(appearance: viewAppearance)
                     .clipped()
                     .contentShape(Rectangle())
                     .onTapGesture {
@@ -219,16 +253,16 @@ struct EnrichedCarouView: View {
                     }
             }
         }
-        .frame(width: CGFloat(totalPages) * availableWidth, height: imageHeight)
+        .frame(width: CGFloat(totalPages) * innerWidth, height: imageHeight)
         .fixedSize(horizontal: true, vertical: false)
-        .offset(x: -scrollOffset * availableWidth + dragOffset)
-        .frame(width: availableWidth, height: imageHeight, alignment: .leading)
+        .offset(x: -scrollOffset * innerWidth + dragOffset)
+        .frame(width: innerWidth, height: imageHeight, alignment: .leading)
         .clipped()
         .transaction { t in
             if isUserInteracting { t.animation = nil; t.disablesAnimations = true }
         }
         .animation(.easeInOut(duration: 0.3), value: scrollOffset)
-        .gesture(dragGesture(count: count, totalPages: totalPages, pageWidth: availableWidth))
+        .gesture(dragGesture(count: count, totalPages: totalPages, pageWidth: innerWidth))
     }
     
     // MARK: - Content Layout (handles overlay vs stacked)
@@ -239,14 +273,13 @@ struct EnrichedCarouView: View {
         pageControl: () -> PageControlContent,
         textBlock: () -> TextContent,
         imageHeight: CGFloat,
-        availableWidth: CGFloat,
-        totalHeight: CGFloat
+        innerWidth: CGFloat,
+        innerHeight: CGFloat
     ) -> some View {
         let isTextOverlay = layout.textPosition == .overlay
         let isPageControlOverlay = layout.pageControlPosition == .overlay
         
         if isTextOverlay && isPageControlOverlay {
-            // Both overlay: ZStack with image, page control at bottom, text at bottom
             ZStack(alignment: .bottom) {
                 imageContent()
                     .frame(height: imageHeight)
@@ -255,16 +288,12 @@ struct EnrichedCarouView: View {
                     textBlock()
                         .background(overlayTextBackground)
                     pageControl()
-                        .frame(height: 32)
+                        .frame(height: Self.pageControlRowHeight)
                 }
                 .padding(.bottom, 12)
             }
-            .padding(.top, insets.top)
-            .padding(.leading, insets.leading)
-            .padding(.trailing, insets.trailing)
             
         } else if isTextOverlay {
-            // Text overlay, page control stacked
             VStack(spacing: 0) {
                 ZStack(alignment: .bottom) {
                     imageContent()
@@ -272,51 +301,39 @@ struct EnrichedCarouView: View {
                     
                     textBlock()
                         .background(overlayTextBackground)
-                        .padding(.bottom, 12)
+                        .padding(.bottom, 8)
                 }
-                .padding(.top, insets.top)
-                .padding(.leading, insets.leading)
-                .padding(.trailing, insets.trailing)
                 
                 pageControl()
-                    .frame(height: 32)
-                    .padding(.vertical, 6)
+                    .frame(height: Self.pageControlRowHeight)
+                    .padding(.top, 4)
             }
             
         } else if isPageControlOverlay {
-            // Page control overlay, text stacked
             VStack(spacing: 0) {
                 ZStack(alignment: .bottom) {
                     imageContent()
                         .frame(height: imageHeight)
                     
                     pageControl()
-                        .frame(height: 32)
+                        .frame(height: Self.pageControlRowHeight)
                         .padding(.bottom, 8)
                 }
-                .padding(.top, insets.top)
-                .padding(.leading, insets.leading)
-                .padding(.trailing, insets.trailing)
                 
                 textBlock()
-                    .frame(maxHeight: .infinity)
             }
             
         } else {
-            // Both stacked (default)
             VStack(spacing: 0) {
                 imageContent()
                     .frame(height: imageHeight)
-                    .padding(.top, insets.top)
-                    .padding(.leading, insets.leading)
-                    .padding(.trailing, insets.trailing)
                 
                 pageControl()
-                    .frame(height: 32)
-                    .padding(.vertical, 6)
+                    .frame(height: Self.pageControlRowHeight)
+                    .padding(.top, 4)
                 
                 textBlock()
-                    .frame(maxHeight: .infinity)
+                    .frame(height: Self.textBlockHeight)
             }
         }
     }
@@ -326,19 +343,27 @@ struct EnrichedCarouView: View {
     @ViewBuilder
     private func cardWrapper<Content: View>(pageWidth: CGFloat, height: CGFloat, @ViewBuilder content: () -> Content) -> some View {
         let cornerRadius = viewAppearance.backgroundCornerRadius
-        let frameWidth = viewAppearance.backgroundFrameWidth
-        let frameColor = viewAppearance.backgroundFrameColor
+        let borderWidth = viewAppearance.backgroundBorderWidth
+        let borderColor = viewAppearance.backgroundBorderColor
         let shadow = viewAppearance.backgroundShadow
+        let shape = RoundedRectangle(cornerRadius: max(0, cornerRadius))
         
-        content()
-            .frame(width: pageWidth, height: height)
-            .background(Color(.systemBackground))
-            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-            .overlay(
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(frameColor, lineWidth: frameWidth)
-            )
-            .applyCardShadow(shadow)
+        let stacked = ZStack {
+            shape.fill(Color(.systemBackground))
+            content()
+        }
+        .frame(width: pageWidth, height: height)
+        
+        if cornerRadius > 0 {
+            stacked
+                .clipShape(shape)
+                .overlay(shape.stroke(borderColor, lineWidth: borderWidth))
+                .applyCardShadow(shadow)
+        } else {
+            stacked
+                .overlay(Rectangle().stroke(borderColor, lineWidth: borderWidth))
+                .applyCardShadow(shadow)
+        }
     }
     
     // MARK: - Overlay Text Background
@@ -450,12 +475,14 @@ struct EnrichedCarouView: View {
                     .font(titleFont)
                     .foregroundColor(viewAppearance.titleColor)
                     .lineLimit(1)
+                    .truncationMode(.tail)
             }
             if let desc = item.description, !desc.isEmpty {
                 Text(desc)
                     .font(descriptionFont)
                     .foregroundColor(viewAppearance.descriptionColor)
                     .lineLimit(2)
+                    .truncationMode(.tail)
             }
         }
         .frame(maxWidth: .infinity, alignment: textFrameAlignment)
@@ -520,13 +547,13 @@ struct EnrichedCarouView: View {
 // MARK: - View Extensions for Card Appearance
 
 private extension View {
-    /// Applies image frame (border) based on appearance settings.
+    /// Applies image border based on appearance settings.
     @ViewBuilder
-    func applyImageFrame(appearance: EnrichedCarouViewAppearance) -> some View {
-        if appearance.imageFrameWidth > 0 {
+    func applyImageBorder(appearance: EnrichedCarouViewAppearance) -> some View {
+        if appearance.imageBorderWidth > 0 {
             self.overlay(
                 Rectangle()
-                    .stroke(appearance.imageFrameColor, lineWidth: appearance.imageFrameWidth)
+                    .stroke(appearance.imageBorderColor, lineWidth: appearance.imageBorderWidth)
             )
         } else {
             self

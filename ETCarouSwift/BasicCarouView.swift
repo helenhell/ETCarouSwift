@@ -141,8 +141,7 @@ struct BasicCarouView: View {
                             dotSize: configuration.dotSize
                         )
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .frame(height: geometry.size.height * 0.25)
-                        .padding(.bottom, geometry.size.height * 0.05)
+                        .padding(.bottom, 12)
                     }
                     .frame(width: pageWidth, height: geometry.size.height)
                     .clipped()

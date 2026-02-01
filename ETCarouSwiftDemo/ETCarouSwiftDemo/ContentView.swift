@@ -20,15 +20,27 @@ struct CarouselDemoView: View {
         Image("2"),
         Image("3"),
         Image("4"),
-        Image("5")
+        Image("5"),
+        Image("6")
     ]
 
     private let enrichedItems: [CarouItem] = [
-        CarouItem(image: Image("1"), title: "Slide One", description: "First image in the carousel."),
-        CarouItem(image: Image("2"), title: "Slide Two", description: "Second image with a short description."),
-        CarouItem(image: Image("3"), title: "Slide Three", description: "Third slide with optional text."),
-        CarouItem(image: Image("4"), title: "Slide Four", description: "Fourth item in the enriched list."),
-        CarouItem(image: Image("5"), title: "Slide Five", description: "Final slide of the demo.")
+        CarouItem(image: Image("f1"), title: "Spring Bloom", description: "Fresh petals opening to the morning sun."),
+        CarouItem(image: Image("f2"), title: "Garden Rose", description: "Classic beauty in full bloom."),
+        CarouItem(image: Image("f3"), title: "Wildflower Meadow", description: "A tapestry of color in the grass."),
+        CarouItem(image: Image("f4"), title: "Summer Bouquet", description: "Bright and cheerful summer flowers."),
+        CarouItem(image: Image("f5"), title: "Petal Close-Up", description: "Delicate details up close."),
+        CarouItem(image: Image("f6"), title: "Lavender Field", description: "Soft purple hues and gentle fragrance."),
+        CarouItem(image: Image("f7"), title: "Dahlia", description: "Bold and layered petals."),
+        CarouItem(image: Image("f8"), title: "Floral Arrangement", description: "Elegant mix of blooms."),
+        CarouItem(image: Image("f9"), title: "Poppy", description: "Vibrant and delicate."),
+        CarouItem(image: Image("f10"), title: "Garden Path", description: "Flowers lining the way."),
+        CarouItem(image: Image("f11"), title: "Peony", description: "Lush and romantic."),
+        CarouItem(image: Image("f12"), title: "Sunflower", description: "Bright face turned to the sky."),
+        CarouItem(image: Image("f13"), title: "Tulip", description: "Graceful curves and bold color."),
+        CarouItem(image: Image("f14"), title: "Orchid", description: "Exotic and refined."),
+        CarouItem(image: Image("f15"), title: "Floral Still Life", description: "A moment of natural beauty."),
+        CarouItem(image: Image("f16"), title: "Garden View", description: "Another glimpse of floral beauty."),
     ]
 
     var body: some View {
@@ -87,8 +99,57 @@ struct ContentView: View {
     }
 }
 
-#Preview("Demo Enriched") {
+#Preview("Demo Enriched - Default") {
     NavigationStack {
         CarouselDemoView(configuration: CarouViewConfiguration(), mode: .enriched)
+    }
+}
+
+#Preview("Demo Enriched - Overlay") {
+    let behavior = CarouBehavior(autoRideEnabled: false)
+    let layout = EnrichedCarouLayout(
+        pageControlPosition: .overlay,
+        textPosition: .overlay
+    )
+    let viewAppearance = EnrichedCarouViewAppearance(
+        textAlignment: .center,
+        titleColor: .white,
+        descriptionColor: .white.opacity(0.9)
+    )
+    let enrichedAppearance = EnrichedCarouAppearance(
+        view: viewAppearance
+    )
+    let config = CarouViewConfiguration(
+        behavior: behavior,
+        enrichedLayout: layout,
+        enrichedAppearance: enrichedAppearance
+    )
+    
+    return NavigationStack {
+        CarouselDemoView(configuration: config, mode: .enriched)
+    }
+}
+
+#Preview("Demo Enriched - Card Style") {
+    let behavior = CarouBehavior(autoRideEnabled: false)
+    let viewAppearance = EnrichedCarouViewAppearance(
+        cardInset: 16,
+        imageBorderWidth: 2,
+        imageBorderColor: .blue.opacity(0.3),
+        backgroundBorderWidth: 1,
+        backgroundBorderColor: .gray.opacity(0.3),
+        backgroundCornerRadius: 16,
+        backgroundShadow: CarouShadow(color: .black.opacity(0.2), radius: 8, x: 0, y: 4)
+    )
+    let enrichedAppearance = EnrichedCarouAppearance(
+        view: viewAppearance
+    )
+    let config = CarouViewConfiguration(
+        behavior: behavior,
+        enrichedAppearance: enrichedAppearance
+    )
+    
+    return NavigationStack {
+        CarouselDemoView(configuration: config, mode: .enriched)
     }
 }

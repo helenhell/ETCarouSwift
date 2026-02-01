@@ -174,15 +174,14 @@ public struct EnrichedCarouViewAppearance {
     public let descriptionFontSize: CGFloat
     public let descriptionFontBundle: Bundle?
     
-    // Image
-    public let imageBackgroundInset: EdgeInsets
-    public let bottomInsetFollowsContent: Bool
-    public let imageFrameWidth: CGFloat
-    public let imageFrameColor: Color
+    // Card inset (applies uniformly to top, leading, trailing for card-like appearance)
+    public let cardInset: CGFloat
+    public let imageBorderWidth: CGFloat
+    public let imageBorderColor: Color
     
     // Background
-    public let backgroundFrameWidth: CGFloat
-    public let backgroundFrameColor: Color
+    public let backgroundBorderWidth: CGFloat
+    public let backgroundBorderColor: Color
     public let backgroundCornerRadius: CGFloat
     public let backgroundShadow: CarouShadow?
     
@@ -196,12 +195,11 @@ public struct EnrichedCarouViewAppearance {
         descriptionFontName: String? = nil,
         descriptionFontSize: CGFloat = 15,
         descriptionFontBundle: Bundle? = nil,
-        imageBackgroundInset: EdgeInsets = EdgeInsets(),
-        bottomInsetFollowsContent: Bool = true,
-        imageFrameWidth: CGFloat = 0,
-        imageFrameColor: Color = .clear,
-        backgroundFrameWidth: CGFloat = 0,
-        backgroundFrameColor: Color = .clear,
+        cardInset: CGFloat = 0,
+        imageBorderWidth: CGFloat = 0,
+        imageBorderColor: Color = .clear,
+        backgroundBorderWidth: CGFloat = 0,
+        backgroundBorderColor: Color = .clear,
         backgroundCornerRadius: CGFloat = 0,
         backgroundShadow: CarouShadow? = nil
     ) {
@@ -214,12 +212,11 @@ public struct EnrichedCarouViewAppearance {
         self.descriptionFontName = descriptionFontName
         self.descriptionFontSize = descriptionFontSize
         self.descriptionFontBundle = descriptionFontBundle
-        self.imageBackgroundInset = imageBackgroundInset
-        self.bottomInsetFollowsContent = bottomInsetFollowsContent
-        self.imageFrameWidth = imageFrameWidth
-        self.imageFrameColor = imageFrameColor
-        self.backgroundFrameWidth = backgroundFrameWidth
-        self.backgroundFrameColor = backgroundFrameColor
+        self.cardInset = cardInset
+        self.imageBorderWidth = imageBorderWidth
+        self.imageBorderColor = imageBorderColor
+        self.backgroundBorderWidth = backgroundBorderWidth
+        self.backgroundBorderColor = backgroundBorderColor
         self.backgroundCornerRadius = backgroundCornerRadius
         self.backgroundShadow = backgroundShadow
     }

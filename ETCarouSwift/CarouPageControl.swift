@@ -9,7 +9,9 @@
 import SwiftUI
 
 struct CarouPageControl: View {
+    /// Logical item count (number of pages/slides). Must not include clone pages used for infinite scroll.
     let numberOfPages: Int
+    /// Current page index (0-based).
     let currentPage: Int
     let dotColor: Color
     let currentDotColor: Color
@@ -17,12 +19,12 @@ struct CarouPageControl: View {
     var direction: CarouDirection = .leftToRight
     var dotSize: CarouDotSize = .small
     
-    /// Optional custom font for text mode (used in enriched view).
+    /// Optional custom font for text mode (e.g. description size in enriched view).
     var textFont: Font?
-    /// Optional custom color for text mode (used in enriched view).
+    /// When nil, text mode uses currentDotColor to match dot styling.
     var textColor: Color?
 
-    /// Whether to use text mode based on page count and dot size threshold.
+    /// Use text mode when page count exceeds threshold (small/medium: 15, large: 10).
     private var useTextMode: Bool {
         numberOfPages > dotSize.overflowThreshold
     }
@@ -51,7 +53,7 @@ struct CarouPageControl: View {
         }
     }
     
-    /// Text view for overflow mode ("3 / 50").
+    /// Text view for overflow mode ("3 / 17"). Uses numberOfPages as total (logical count).
     private var textModeView: some View {
         let displayPage = currentPage + 1 // 1-based for display
         let font = textFont ?? .system(size: dotSizePoints * 1.5, weight: .medium)

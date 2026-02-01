@@ -142,17 +142,19 @@ CarouView(
 
 - **EnrichedCarouLayout:** `pageControlPosition` (`.stacked` or `.overlay`), `textPosition` (`.stacked` or `.overlay`)
 - **EnrichedCarouAppearance:** combines `CarouPageControlAppearance` and `EnrichedCarouViewAppearance` (text colors/fonts, card inset, borders, corner radius, shadow)
+- **Card configs** (card inset, background border, corner radius, shadow) apply only to stacked layout. When both `pageControlPosition` and `textPosition` are `.overlay`, card configs are ignored for a full-bleed image look.
 
 ```swift
+// Overlay layout: full-bleed image with text overlaid; card configs not applied
 let behavior = CarouBehavior(autoRideEnabled: false)
 let layout = EnrichedCarouLayout(
     pageControlPosition: .overlay,
     textPosition: .overlay
 )
 let viewAppearance = EnrichedCarouViewAppearance(
-    cardInset: 16,
-    backgroundCornerRadius: 16,
-    backgroundShadow: .default
+    textAlignment: .center,
+    titleColor: .white,
+    descriptionColor: .white.opacity(0.9)
 )
 let enrichedAppearance = EnrichedCarouAppearance(view: viewAppearance)
 
@@ -162,6 +164,22 @@ let config = CarouViewConfiguration(
     enrichedAppearance: enrichedAppearance
 )
 
+CarouView(items: items, configuration: config, onItemChanged: { _ in }, onItemTapped: { _ in })
+    .frame(height: 360)
+```
+
+```swift
+// Stacked layout: card configs apply (inset, border, corner radius, shadow)
+let layout = EnrichedCarouLayout(pageControlPosition: .stacked, textPosition: .stacked)
+let viewAppearance = EnrichedCarouViewAppearance(
+    cardInset: 16,
+    backgroundCornerRadius: 16,
+    backgroundShadow: .default
+)
+let config = CarouViewConfiguration(
+    enrichedLayout: layout,
+    enrichedAppearance: EnrichedCarouAppearance(view: viewAppearance)
+)
 CarouView(items: items, configuration: config, onItemChanged: { _ in }, onItemTapped: { _ in })
     .frame(height: 360)
 ```

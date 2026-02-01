@@ -25,9 +25,15 @@ struct EnrichedCarouView: View {
     // Layout helpers
     private var layout: EnrichedCarouLayout { configuration.enrichedLayout }
     private var viewAppearance: EnrichedCarouViewAppearance { configuration.enrichedAppearance.view }
-    private var cardInset: CGFloat { viewAppearance.cardInset }
+    /// When both text and page control use overlay, card configs (inset, border, shadow) are not applicable.
+    private var isFullOverlay: Bool {
+        layout.textPosition == .overlay && layout.pageControlPosition == .overlay
+    }
+    private var cardInset: CGFloat {
+        isFullOverlay ? 0 : viewAppearance.cardInset
+    }
     private var hasCardAppearance: Bool {
-        cardInset > 0 || viewAppearance.backgroundCornerRadius > 0 || viewAppearance.backgroundShadow != nil
+        !isFullOverlay && (cardInset > 0 || viewAppearance.backgroundCornerRadius > 0 || viewAppearance.backgroundShadow != nil)
     }
 
     init(
@@ -339,6 +345,8 @@ struct EnrichedCarouView: View {
     
     // MARK: - Card Wrapper
     
+    /// Applies card-like background and optional styling (border, corner radius, shadow).
+    /// When in full overlay layout, card styling is skipped; background only.
     @ViewBuilder
     private func cardWrapper<Content: View>(pageWidth: CGFloat, height: CGFloat, @ViewBuilder content: () -> Content) -> some View {
         let cornerRadius = viewAppearance.backgroundCornerRadius
@@ -347,19 +355,21 @@ struct EnrichedCarouView: View {
         let shadow = viewAppearance.backgroundShadow
         let shape = RoundedRectangle(cornerRadius: max(0, cornerRadius))
         
-        let stacked = ZStack {
+        let base = ZStack {
             shape.fill(Color(.systemBackground))
             content()
         }
         .frame(width: pageWidth, height: height)
         
-        if cornerRadius > 0 {
-            stacked
+        if isFullOverlay {
+            base
+        } else if cornerRadius > 0 {
+            base
                 .clipShape(shape)
                 .overlay(shape.stroke(borderColor, lineWidth: borderWidth))
                 .applyCardShadow(shadow)
         } else {
-            stacked
+            base
                 .overlay(Rectangle().stroke(borderColor, lineWidth: borderWidth))
                 .applyCardShadow(shadow)
         }

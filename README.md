@@ -117,7 +117,7 @@ CarouView(
 
 ### Enriched carousel (image + title + description)
 
-Use `CarouItem` for each slide and the `items` initializer. Configure layout (stacked vs overlay) and appearance (card inset, borders, shadow) via `CarouViewConfiguration`.
+Use `CarouItem` for each slide and the `items` initializer. Configure layout (stacked vs overlay) and appearance (card inset, background color, borders, shadow) via `CarouViewConfiguration`.
 
 ```swift
 let items: [CarouItem] = [
@@ -141,8 +141,8 @@ CarouView(
 **Custom layout and appearance:**
 
 - **EnrichedCarouLayout:** `pageControlPosition` (`.stacked` or `.overlay`), `textPosition` (`.stacked` or `.overlay`)
-- **EnrichedCarouAppearance:** combines `CarouPageControlAppearance` and `EnrichedCarouViewAppearance` (text colors/fonts, card inset, borders, corner radius, shadow)
-- **Card configs** (card inset, background border, corner radius, shadow) apply only to stacked layout. When both `pageControlPosition` and `textPosition` are `.overlay`, card configs are ignored for a full-bleed image look.
+- **EnrichedCarouAppearance:** combines `CarouPageControlAppearance` and `EnrichedCarouViewAppearance` (text colors/fonts, card inset, background color, borders, corner radius, shadow)
+- **Card configs** (card inset, background color, background border, corner radius, shadow) apply only to stacked layout. When both `pageControlPosition` and `textPosition` are `.overlay`, card configs are ignored for a full-bleed image look.
 
 ```swift
 // Overlay layout: full-bleed image with text overlaid; card configs not applied

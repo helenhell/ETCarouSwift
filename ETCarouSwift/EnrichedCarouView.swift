@@ -356,7 +356,7 @@ struct EnrichedCarouView: View {
         let shape = RoundedRectangle(cornerRadius: max(0, cornerRadius))
         
         let base = ZStack {
-            shape.fill(Color(.systemBackground))
+            shape.fill(viewAppearance.backgroundColor)
             content()
         }
         .frame(width: pageWidth, height: height)

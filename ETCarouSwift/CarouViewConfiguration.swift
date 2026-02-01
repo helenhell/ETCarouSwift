@@ -195,6 +195,7 @@ public struct EnrichedCarouViewAppearance {
     public let imageBorderColor: Color
     
     // Background
+    public let backgroundColor: Color
     public let backgroundBorderWidth: CGFloat
     public let backgroundBorderColor: Color
     public let backgroundCornerRadius: CGFloat
@@ -213,6 +214,7 @@ public struct EnrichedCarouViewAppearance {
         cardInset: CGFloat = 0,
         imageBorderWidth: CGFloat = 0,
         imageBorderColor: Color = .clear,
+        backgroundColor: Color = Color(.systemBackground),
         backgroundBorderWidth: CGFloat = 0,
         backgroundBorderColor: Color = .clear,
         backgroundCornerRadius: CGFloat = 0,
@@ -230,6 +232,7 @@ public struct EnrichedCarouViewAppearance {
         self.cardInset = cardInset
         self.imageBorderWidth = imageBorderWidth
         self.imageBorderColor = imageBorderColor
+        self.backgroundColor = backgroundColor
         self.backgroundBorderWidth = backgroundBorderWidth
         self.backgroundBorderColor = backgroundBorderColor
         self.backgroundCornerRadius = backgroundCornerRadius

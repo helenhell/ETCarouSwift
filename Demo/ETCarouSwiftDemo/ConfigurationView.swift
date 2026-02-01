@@ -66,6 +66,7 @@ struct ConfigurationView: View {
     
     // MARK: - Enriched Card Appearance
     @State private var cardInset: Double = 0
+    @State private var backgroundColor: Color = Color(.systemBackground)
     @State private var imageBorderEnabled: Bool = false
     @State private var imageBorderWidth: Double = 0
     @State private var imageBorderColor: Color = .gray
@@ -112,6 +113,7 @@ struct ConfigurationView: View {
             cardInset: cardInset,
             imageBorderWidth: imageBorderEnabled ? imageBorderWidth : 0,
             imageBorderColor: imageBorderColor,
+            backgroundColor: backgroundColor,
             backgroundBorderWidth: backgroundBorderEnabled ? backgroundBorderWidth : 0,
             backgroundBorderColor: backgroundBorderColor,
             backgroundCornerRadius: backgroundCornerRadius,
@@ -247,6 +249,8 @@ struct ConfigurationView: View {
                 }
                 
                 Section("Card Style (Enriched)") {
+                    ColorPicker("Background color", selection: $backgroundColor)
+                    
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
                             Text("Card inset")

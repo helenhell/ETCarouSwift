@@ -9,10 +9,11 @@
 import SwiftUI
 import ETCarouSwift
 
-/// Demo screen that shows the carousel with the given configuration.
+/// Demo screen that shows the carousel with the given configuration and mode (basic or enriched).
 struct CarouselDemoView: View {
     let configuration: CarouViewConfiguration
-    @State private var currentImageIndex: Int = 0
+    let mode: CarouselDemoMode
+    @State private var currentIndex: Int = 0
 
     private let images: [Image] = [
         Image("1"),
@@ -22,27 +23,42 @@ struct CarouselDemoView: View {
         Image("5")
     ]
 
+    private let enrichedItems: [CarouItem] = [
+        CarouItem(image: Image("1"), title: "Slide One", description: "First image in the carousel."),
+        CarouItem(image: Image("2"), title: "Slide Two", description: "Second image with a short description."),
+        CarouItem(image: Image("3"), title: "Slide Three", description: "Third slide with optional text."),
+        CarouItem(image: Image("4"), title: "Slide Four", description: "Fourth item in the enriched list."),
+        CarouItem(image: Image("5"), title: "Slide Five", description: "Final slide of the demo.")
+    ]
+
     var body: some View {
         VStack(spacing: 20) {
-            CarouView(
-                imageSet: images,
-                configuration: configuration,
-                onImageChanged: { index in
-                    currentImageIndex = index
-                    print("Image changed to index: \(index)")
-                },
-                onImageTapped: { index in
-                    print("Image tapped at index: \(index)")
+            Group {
+                switch mode {
+                case .basic:
+                    CarouView(
+                        imageSet: images,
+                        configuration: configuration,
+                        onImageChanged: { index in currentIndex = index },
+                        onImageTapped: { _ in }
+                    )
+                case .enriched:
+                    CarouView(
+                        items: enrichedItems,
+                        configuration: configuration,
+                        onItemChanged: { index in currentIndex = index },
+                        onItemTapped: { _ in }
+                    )
                 }
-            )
-            .frame(height: 300)
+            }
+            .frame(height: mode == .enriched ? 380 : 300)
             .overlay(
                 RoundedRectangle(cornerRadius: 0)
                     .stroke(Color.gray.opacity(0.5), lineWidth: 2)
             )
             .padding(.horizontal, 20)
 
-            Text("Image #\(currentImageIndex + 1)")
+            Text(mode == .basic ? "Image #\(currentIndex + 1)" : "Item #\(currentIndex + 1)")
                 .font(.system(size: 20, weight: .bold))
             Spacer()
         }
@@ -65,8 +81,14 @@ struct ContentView: View {
     ContentView()
 }
 
-#Preview("Demo") {
+#Preview("Demo Basic") {
     NavigationStack {
-        CarouselDemoView(configuration: CarouViewConfiguration())
+        CarouselDemoView(configuration: CarouViewConfiguration(), mode: .basic)
+    }
+}
+
+#Preview("Demo Enriched") {
+    NavigationStack {
+        CarouselDemoView(configuration: CarouViewConfiguration(), mode: .enriched)
     }
 }

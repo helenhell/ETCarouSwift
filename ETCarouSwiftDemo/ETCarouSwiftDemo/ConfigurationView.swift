@@ -9,7 +9,13 @@
 import SwiftUI
 import ETCarouSwift
 
+enum CarouselDemoMode: String, CaseIterable {
+    case basic = "Basic"
+    case enriched = "Enriched"
+}
+
 struct ConfigurationView: View {
+    @State private var carouselMode: CarouselDemoMode = .basic
     @State private var rideDirection: CarouDirection = .leftToRight
     @State private var autoRideEnabled: Bool = true
     @State private var showTime: Double = 2.0
@@ -33,6 +39,15 @@ struct ConfigurationView: View {
 
     var body: some View {
         Form {
+            Section("Carousel type") {
+                Picker("Mode", selection: $carouselMode) {
+                    ForEach(CarouselDemoMode.allCases, id: \.self) { mode in
+                        Text(mode.rawValue).tag(mode)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+
             Section("Direction & Auto-ride") {
                 Picker("Direction", selection: $rideDirection) {
                     Text("Right to Left").tag(CarouDirection.rightToLeft)
@@ -102,7 +117,7 @@ struct ConfigurationView: View {
         .navigationTitle("Carousel Config")
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(isPresented: $showDemo) {
-            CarouselDemoView(configuration: builtConfiguration)
+            CarouselDemoView(configuration: builtConfiguration, mode: carouselMode)
         }
     }
 }

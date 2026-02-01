@@ -309,19 +309,25 @@ struct ConfigurationView: View {
         }
         .navigationTitle("Carousel Config")
         .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    demoDestination = DemoDestination(
-                        configuration: builtConfiguration,
-                        mode: carouselMode,
-                        dataSetSize: dataSetSize
-                    )
-                } label: {
-                    Label("Launch Demo", systemImage: "play.fill")
+        .safeAreaInset(edge: .bottom) {
+            Button {
+                demoDestination = DemoDestination(
+                    configuration: builtConfiguration,
+                    mode: carouselMode,
+                    dataSetSize: dataSetSize
+                )
+            } label: {
+                HStack(spacing: 8) {
+                    Text("Launch Demo")
+                    Image(systemName: "chevron.right")
+                        .font(.body.weight(.semibold))
                 }
-                .buttonStyle(.borderedProminent)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
             }
+            .buttonStyle(.borderedProminent)
+            .padding(.horizontal)
+            .padding(.bottom, 8)
         }
         .navigationDestination(item: $demoDestination) { dest in
             CarouselDemoView(configuration: dest.configuration, mode: dest.mode, dataSetSize: dest.dataSetSize)

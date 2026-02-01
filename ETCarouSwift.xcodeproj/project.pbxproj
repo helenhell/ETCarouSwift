@@ -15,6 +15,8 @@
 		515CBB6823E46B750083C357 /* BasicCarouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB6923E46B750083C357 /* BasicCarouView.swift */; };
 		515CBB6A23E46B750083C358 /* EnrichedCarouView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB6B23E46B750083C358 /* EnrichedCarouView.swift */; };
 		515CBB6C23E46B750083C359 /* CarouFontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB6D23E46B750083C359 /* CarouFontHelper.swift */; };
+		515CBB6E23E46B750083C35A /* CarouConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB6E23E46B750083C35B /* CarouConstants.swift */; };
+		515CBB7023E46B750083C35A /* CarouScrollLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 515CBB7123E46B750083C35B /* CarouScrollLogic.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		515CBB6923E46B750083C357 /* BasicCarouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicCarouView.swift; sourceTree = "<group>"; };
 		515CBB6B23E46B750083C358 /* EnrichedCarouView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrichedCarouView.swift; sourceTree = "<group>"; };
 		515CBB6D23E46B750083C359 /* CarouFontHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouFontHelper.swift; sourceTree = "<group>"; };
+		515CBB6E23E46B750083C35B /* CarouConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouConstants.swift; sourceTree = "<group>"; };
+		515CBB7123E46B750083C35B /* CarouScrollLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouScrollLogic.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,8 @@
 				515CBB6923E46B750083C357 /* BasicCarouView.swift */,
 				515CBB6B23E46B750083C358 /* EnrichedCarouView.swift */,
 				515CBB6D23E46B750083C359 /* CarouFontHelper.swift */,
+				515CBB6E23E46B750083C35B /* CarouConstants.swift */,
+				515CBB7123E46B750083C35B /* CarouScrollLogic.swift */,
 			);
 			path = ETCarouSwift;
 			sourceTree = "<group>";
@@ -161,6 +167,8 @@
 				515CBB6823E46B750083C357 /* BasicCarouView.swift in Sources */,
 				515CBB6A23E46B750083C358 /* EnrichedCarouView.swift in Sources */,
 				515CBB6C23E46B750083C359 /* CarouFontHelper.swift in Sources */,
+				515CBB6E23E46B750083C35A /* CarouConstants.swift in Sources */,
+				515CBB7023E46B750083C35A /* CarouScrollLogic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

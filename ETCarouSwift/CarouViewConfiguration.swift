@@ -12,6 +12,21 @@ import SwiftUI
 
 public enum CarouDirection {
     case leftToRight, rightToLeft
+
+    /// Maps a raw page index (including clone pages 0 and count+1) to the logical content index (0..<count).
+    /// Used by both basic and enriched carousels for infinite scroll.
+    func logicalIndex(page: Int, count: Int) -> Int {
+        switch self {
+        case .leftToRight:
+            if page <= 0 { return count - 1 }
+            if page >= count + 1 { return 0 }
+            return max(0, min(count - 1, page - 1))
+        case .rightToLeft:
+            if page == 0 || page == count { return 0 }
+            if page == 1 || page == count + 1 { return count - 1 }
+            return max(0, min(count - 1, count - page))
+        }
+    }
 }
 
 /// How the carousel image is scaled within its frame.

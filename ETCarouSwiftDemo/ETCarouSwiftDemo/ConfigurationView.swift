@@ -14,6 +14,14 @@ enum CarouselDemoMode: String, CaseIterable {
     case enriched = "Enriched"
 }
 
+/// Value used for navigation to the demo screen (enables value-based navigationDestination).
+private struct DemoDestination: Identifiable {
+    let id = UUID()
+    let configuration: CarouViewConfiguration
+    let mode: CarouselDemoMode
+    let dataSetSize: DemoDataSetSize
+}
+
 struct ConfigurationView: View {
     // MARK: - Mode
     @State private var carouselMode: CarouselDemoMode = .basic
@@ -52,7 +60,7 @@ struct ConfigurationView: View {
     @State private var backgroundCornerRadius: Double = 0
     @State private var shadowEnabled: Bool = false
     
-    @State private var showDemo = false
+    @State private var demoDestination: DemoDestination?
 
     private var builtConfiguration: CarouViewConfiguration {
         let behavior = CarouBehavior(
@@ -276,7 +284,11 @@ struct ConfigurationView: View {
 
             Section {
                 Button {
-                    showDemo = true
+                    demoDestination = DemoDestination(
+                        configuration: builtConfiguration,
+                        mode: carouselMode,
+                        dataSetSize: dataSetSize
+                    )
                 } label: {
                     HStack {
                         Spacer()
@@ -300,8 +312,8 @@ struct ConfigurationView: View {
         }
         .navigationTitle("Carousel Config")
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(isPresented: $showDemo) {
-            CarouselDemoView(configuration: builtConfiguration, mode: carouselMode, dataSetSize: dataSetSize)
+        .navigationDestination(item: $demoDestination) { dest in
+            CarouselDemoView(configuration: dest.configuration, mode: dest.mode, dataSetSize: dest.dataSetSize)
         }
     }
 }

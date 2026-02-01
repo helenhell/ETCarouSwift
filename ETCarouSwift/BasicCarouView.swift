@@ -12,7 +12,7 @@ import SwiftUI
 struct BasicCarouView: View {
     @State private var scrollOffset: CGFloat = 1
     @State private var dragOffset: CGFloat = 0
-    @State private var timer: Timer?
+    @State private var autoRideTask: Task<Void, Never>?
     @State private var isUserInteracting: Bool = false
     @State private var lastDragTranslation: CGFloat = 0
     @State private var lastDragTime: TimeInterval = 0
@@ -41,7 +41,7 @@ struct BasicCarouView: View {
         GeometryReader { geometry in
             ZStack {
                 if images.isEmpty {
-                    Color.blue
+                    Color(.systemFill)
                 } else if images.count == 1 {
                     images[0]
                         .resizable()
@@ -56,7 +56,7 @@ struct BasicCarouView: View {
                     let resolvedConfig = configuration.with(viewWidth: pageWidth)
                     let effectiveOffset = scrollOffset - dragOffset / pageWidth
                     let visiblePage = max(0, min(CGFloat(totalPages - 1), effectiveOffset))
-                    let currentLogical = logicalIndex(for: Int(round(visiblePage)), count: count, direction: configuration.rideDirection)
+                    let currentLogical = configuration.rideDirection.logicalIndex(page: Int(round(visiblePage)), count: count)
 
                     ZStack(alignment: .bottom) {
                         HStack(spacing: 0) {
@@ -68,7 +68,7 @@ struct BasicCarouView: View {
                                     .clipped()
                                     .contentShape(Rectangle())
                                     .onTapGesture {
-                                        onImageTapped?(logicalIndex(for: p, count: count, direction: configuration.rideDirection))
+                                        onImageTapped?(configuration.rideDirection.logicalIndex(page: p, count: count))
                                     }
                             }
                         }
@@ -80,7 +80,7 @@ struct BasicCarouView: View {
                         .transaction { t in
                             if isUserInteracting { t.animation = nil; t.disablesAnimations = true }
                         }
-                        .animation(.easeInOut(duration: 0.3), value: scrollOffset)
+                        .animation(.easeInOut(duration: CarouConstants.snapAnimationDuration), value: scrollOffset)
                         .gesture(
                             DragGesture(minimumDistance: 0)
                                 .onChanged { value in
@@ -99,34 +99,26 @@ struct BasicCarouView: View {
                                     let effective = scrollOffset - dragOffset / pageWidth
                                     let dt = max(0.001, Date().timeIntervalSince1970 - lastDragTime)
                                     let velocity = (value.translation.width - lastDragTranslation) / CGFloat(dt)
-                                    let velocityThreshold: CGFloat = 200
-                                    let clampedEffective = max(0, min(CGFloat(totalPages - 1), effective))
-                                    var snap: Int
-                                    if velocity < -velocityThreshold {
-                                        snap = min(totalPages - 1, Int(ceil(clampedEffective)))
-                                    } else if velocity > velocityThreshold {
-                                        snap = max(0, Int(floor(clampedEffective)))
-                                    } else {
-                                        snap = Int(round(clampedEffective))
-                                    }
-                                    snap = max(0, min(totalPages - 1, snap))
-                                    let isWraparound = (snap == 0 || snap == totalPages - 1)
-                                    if snap == 0 { snap = count }
-                                    else if snap == totalPages - 1 { snap = 1 }
+                                    let (snapPage, isWraparound) = CarouScrollLogic.snapTarget(
+                                        effectiveOffset: effective,
+                                        velocity: velocity,
+                                        totalPages: totalPages
+                                    )
+                                    let scrollPage = CarouScrollLogic.scrollPage(fromSnap: snapPage, totalPages: totalPages, contentCount: count)
                                     if isWraparound {
                                         var t = Transaction()
                                         t.disablesAnimations = true
                                         withTransaction(t) {
-                                            scrollOffset = CGFloat(snap)
+                                            scrollOffset = CGFloat(scrollPage)
                                             dragOffset = 0
                                         }
                                     } else {
-                                        withAnimation(.easeInOut(duration: 0.3)) {
-                                            scrollOffset = CGFloat(snap)
+                                        withAnimation(.easeInOut(duration: CarouConstants.snapAnimationDuration)) {
+                                            scrollOffset = CGFloat(scrollPage)
                                             dragOffset = 0
                                         }
                                     }
-                                    onImageChanged?(logicalIndex(for: snap, count: count, direction: configuration.rideDirection))
+                                    onImageChanged?(configuration.rideDirection.logicalIndex(page: scrollPage, count: count))
                                     if configuration.autoRideEnabled { startAutoRide() }
                                 }
                         )
@@ -167,56 +159,44 @@ struct BasicCarouView: View {
         }
     }
 
-    private func logicalIndex(for page: Int, count: Int, direction: CarouDirection) -> Int {
-        switch direction {
-        case .leftToRight:
-            if page <= 0 { return count - 1 }
-            if page >= count + 1 { return 0 }
-            return max(0, min(count - 1, page - 1))
-        case .rightToLeft:
-            if page == 0 || page == count { return 0 }
-            if page == 1 || page == count + 1 { return count - 1 }
-            return max(0, min(count - 1, count - page))
-        }
-    }
-
     private func startAutoRide() {
         stopAutoRide()
         let count = images.count
         let totalPages = count + 2
-        let duration: Double = 0.35
-        timer = Timer.scheduledTimer(withTimeInterval: configuration.showTime, repeats: true) { _ in
-            guard !isUserInteracting else { return }
-            Task { @MainActor in
+        let direction = configuration.rideDirection
+        let showTime = configuration.showTime
+        let isRTL = direction == .rightToLeft
+        autoRideTask = Task { @MainActor in
+            while !Task.isCancelled {
+                try? await Task.sleep(nanoseconds: UInt64(showTime * 1_000_000_000))
+                guard !Task.isCancelled, !isUserInteracting else { return }
                 let currentPage = Int(round(scrollOffset))
-                let isRTL = configuration.rideDirection == .rightToLeft
                 let nextPage: Int
                 if isRTL {
                     nextPage = (currentPage - 1 + totalPages) % totalPages
                 } else {
                     nextPage = (currentPage + 1) % totalPages
                 }
-                withAnimation(.easeInOut(duration: duration)) {
+                withAnimation(.easeInOut(duration: CarouConstants.autoRideStepDuration)) {
                     scrollOffset = CGFloat(nextPage)
                 }
                 if nextPage >= 1 && nextPage <= count {
-                    onImageChanged?(logicalIndex(for: nextPage, count: count, direction: configuration.rideDirection))
+                    onImageChanged?(direction.logicalIndex(page: nextPage, count: count))
                 } else {
-                    Task { @MainActor in
-                        try? await Task.sleep(nanoseconds: UInt64(duration * 1_000_000_000))
-                        let targetPage = (nextPage == 0 ? count : 1)
-                        var t = Transaction()
-                        t.disablesAnimations = true
-                        withTransaction(t) { scrollOffset = CGFloat(targetPage) }
-                        onImageChanged?(logicalIndex(for: targetPage, count: count, direction: configuration.rideDirection))
-                    }
+                    try? await Task.sleep(nanoseconds: UInt64(CarouConstants.autoRideStepDuration * 1_000_000_000))
+                    guard !Task.isCancelled else { return }
+                    let targetPage = (nextPage == 0 ? count : 1)
+                    var t = Transaction()
+                    t.disablesAnimations = true
+                    withTransaction(t) { scrollOffset = CGFloat(targetPage) }
+                    onImageChanged?(direction.logicalIndex(page: targetPage, count: count))
                 }
             }
         }
     }
 
     private func stopAutoRide() {
-        timer?.invalidate()
-        timer = nil
+        autoRideTask?.cancel()
+        autoRideTask = nil
     }
 }

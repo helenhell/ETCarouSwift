@@ -60,9 +60,10 @@ struct CarouPageControl: View {
         let currentColor = textColor ?? currentDotColor
         let totalColor = textColor ?? dotColor
         
+        let separator = String(localized: " / ", comment: "Page indicator: current / total")
         return (Text("\(displayPage)")
             .foregroundColor(currentColor)
-        + Text(" / ")
+        + Text(separator)
             .foregroundColor(totalColor)
         + Text("\(numberOfPages)")
             .foregroundColor(totalColor))

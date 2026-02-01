@@ -12,8 +12,13 @@ import UIKit
 #endif
 
 /// Helper for loading custom fonts with system fallback.
+///
+/// **Font registration:** Custom fonts must be registered by your app before use. Register them
+/// via your app target’s Info.plist (e.g. “Fonts provided by application”) or at launch using
+/// `CTFontManagerRegisterFontURLs`. This helper only checks whether the font name is available
+/// (e.g. already registered); it does not register fonts from a bundle.
 public enum CarouFontHelper {
-    
+
     /// Creates a Font from a custom font name with fallback to system font.
     /// - Parameters:
     ///   - name: The font name (e.g., "Avenir-Heavy"). If nil, uses system font.

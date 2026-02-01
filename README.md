@@ -12,7 +12,7 @@ Click on the screenshot to try an interactive demo by [appetize.io](https://appe
 ## Requirements
 
 * iOS 16.0+
-* Xcode 14.0+
+* Xcode 14.0+ (for iOS 16)
 * Swift 5.7+
 
 
@@ -192,6 +192,47 @@ let swiftUIImageSet: [Image] = [
 
 CarouView(imageSet: swiftUIImageSet)
 ```
+
+### Enriched carousel
+
+For slides with image, title, and description, use `CarouItem` and the items initializer. You can configure layout (stacked vs overlay), text style, and card appearance (inset, border, shadow).
+
+```Swift
+import SwiftUI
+import ETCarouSwift
+
+let items: [CarouItem] = [
+    CarouItem(
+        image: Image("photo1"),
+        title: "Title",
+        description: "Optional description text."
+    ),
+    CarouItem(image: Image("photo2"), title: "Another", description: nil)
+]
+
+CarouView(
+    items: items,
+    configuration: CarouViewConfiguration(
+        behavior: CarouBehavior(autoRideEnabled: false),
+        enrichedLayout: EnrichedCarouLayout(
+            pageControlPosition: .overlay,
+            textPosition: .overlay
+        ),
+        enrichedAppearance: EnrichedCarouAppearance(
+            view: EnrichedCarouViewAppearance(
+                cardInset: 16,
+                backgroundCornerRadius: 16,
+                backgroundShadow: CarouShadow.default
+            )
+        )
+    ),
+    onItemChanged: { index in },
+    onItemTapped: { index in }
+)
+.frame(height: 360)
+```
+
+Use `CarouViewConfiguration` with `enrichedLayout` and `enrichedAppearance` for text position (stacked/overlay), page control position, and card style (inset, borders, shadow).
 
 ## Author
 

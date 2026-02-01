@@ -1,238 +1,202 @@
 # ETCarouSwift
 
-A user-friendly and developer-friendly carousel framework built with SwiftUI. ETCarouSwift receives a bunch of images and creates a smooth infinite ride inside the given frame. Dragging is also available along with other handy settings. Simple, light and flawless.
-
-## Demo
-
-Click on the screenshot to try an interactive demo by [appetize.io](https://appetize.io)
-
-[<img src="ETCarouSwift_screenshot.jpg" width="288" height="512" />](https://appetize.io/app/an0dku1e08nm2kv7p8984cyqx8?device=iphone8&scale=75&orientation=portrait&osVersion=13.3)
-
+A SwiftUI carousel with infinite scrolling, optional auto-play, and page indicators. Use it for image-only slides or for rich slides (image plus title and description) with configurable layout and card styling.
 
 ## Requirements
 
 * iOS 16.0+
-* Xcode 14.0+ (for iOS 16)
+* Xcode 14.0+
 * Swift 5.7+
-
 
 ## Installation
 
-### Swift Package Manager
+Add ETCarouSwift via Swift Package Manager:
 
-ETCarouSwift is distributed as a Swift Package. You can add it to your project in two ways:
-
-#### Option 1: Add from GitHub (Recommended)
-
-1. In Xcode, select **File** → **Add Package Dependencies...**
-2. Enter the repository URL: `https://github.com/helenhell/ETCarouSwift.git`
-3. Choose the version or branch you want to use
-4. Click **Add Package**
-5. Select the `ETCarouSwift` library product
-6. Click **Add Package**
-
-#### Option 2: Add Local Package (For Development)
-
-1. In Xcode, select **File** → **Add Package Dependencies...**
-2. Click **Add Local...**
-3. Navigate to the `ETCarouSwift` directory (the one containing `Package.swift`)
-4. Click **Add Package**
-5. Select the `ETCarouSwift` library product
-6. Click **Add Package**
-
-### Manual Installation
-
-1. Download the ```ETCarouSwift``` repository
-2. Copy the ```ETCarouSwift``` folder into your project
-3. In Xcode, add the local package as described in Option 2 above
-
-
+1. In Xcode, choose **File** → **Add Package Dependencies...**
+2. Enter: `https://github.com/helenhell/ETCarouSwift.git`
+3. Pick the version or branch you need, then **Add Package**
+4. Add the `ETCarouSwift` library to your target
 
 ## Usage
 
-### Get started
+### Import
 
-Import ```ETCarouSwift``` and ```SwiftUI``` in your SwiftUI view:
-
-```Swift
+```swift
 import SwiftUI
 import ETCarouSwift
 ```
 
-Initialize ```CarouView``` with a bunch of images. Set ```rideDirection``` as well if needed. Default is ```.rightToLeft```:
+### Basic carousel (images only)
 
-```Swift
+Provide an array of SwiftUI `Image` and an optional `CarouViewConfiguration`. Defaults: auto-play on, direction right-to-left, 2s show time.
+
+```swift
 struct ContentView: View {
-    let images: [UIImage] = [
-        UIImage(named: "1")!,
-        UIImage(named: "2")!,
-        UIImage(named: "3")!,
-        UIImage(named: "4")!,
-        UIImage(named: "5")!
+    let images: [Image] = [
+        Image("1"),
+        Image("2"),
+        Image("3")
     ]
-    
+
     var body: some View {
         CarouView(
             imageSet: images,
-            rideDirection: .rightToLeft
+            configuration: CarouViewConfiguration(),
+            onImageChanged: { index in },
+            onImageTapped: { index in }
         )
         .frame(height: 300)
     }
 }
 ```
 
-### Settings
+### Configuration (basic carousel)
 
-All settings can be configured during initialization:
+Use `CarouViewConfiguration` to control behavior and page control. You can use the legacy initializer or the composed one.
 
-1. **AutoRide** is enabled by default. To disable it:
-```Swift
-CarouView(
-    imageSet: images,
-    autoRideEnabled: false
-)
-```
+**Legacy (all in one):**
 
-2. **Page indicator dot color & current dot color**:
-```Swift
-CarouView(
-    imageSet: images,
+```swift
+let config = CarouViewConfiguration(
+    rideDirection: .rightToLeft,
+    autoRideEnabled: true,
+    showTime: 2.0,
     dotColor: .white,
-    currentDotColor: .black
+    currentDotColor: .black,
+    dotSize: .medium,
+    imageScale: .fill
 )
+
+CarouView(imageSet: images, configuration: config)
 ```
 
-3. **Dot size**. Default is ```.small```. Options: ```.small```, ```.medium```, ```.large```
-```Swift
-CarouView(
-    imageSet: images,
-    dotSize: .medium
+**Composed (behavior + page control):**
+
+```swift
+let behavior = CarouBehavior(
+    rideDirection: .rightToLeft,
+    autoRideEnabled: false,
+    showTime: 3.0,
+    imageScale: .fit
 )
+let pageControl = CarouPageControlAppearance(
+    dotColor: .gray,
+    currentDotColor: .blue,
+    dotSize: .large
+)
+let config = CarouViewConfiguration(
+    behavior: behavior,
+    pageControlAppearance: pageControl
+)
+
+CarouView(imageSet: images, configuration: config)
 ```
 
-4. **Show time**. Default is 2 seconds. Relevant when autoRide is enabled:
-```Swift
-CarouView(
-    imageSet: images,
-    showTime: 3.5
-)
-```
+**Configuration options:**
+
+| Area | Options |
+|------|--------|
+| **CarouBehavior** | `rideDirection` (`.leftToRight` / `.rightToLeft`), `autoRideEnabled`, `showTime`, `imageScale` (`.fill` / `.fit`) |
+| **CarouPageControlAppearance** | `dotColor`, `currentDotColor`, `dotSize` (`.small` / `.medium` / `.large`) |
 
 ### Callbacks
 
-Use closures to handle image changes and taps:
+- **Basic:** `onImageChanged: (Int) -> Void` — current page index when the slide changes  
+- **Basic:** `onImageTapped: (Int) -> Void` — index when the user taps a slide  
+- **Enriched:** `onItemChanged` and `onItemTapped` — same idea for item index
 
-```Swift
+```swift
+@State private var currentIndex: Int = 0
+
 CarouView(
     imageSet: images,
-    onImageChanged: { index in
-        print("Image changed to index: \(index)")
-        // Do something when image changed
-    },
-    onImageTapped: { index in
-        print("Image tapped at index: \(index)")
-        // Do something on image tap
-    }
+    onImageChanged: { index in currentIndex = index },
+    onImageTapped: { index in print("Tapped \(index)") }
 )
 ```
 
-### Complete Example
+### Enriched carousel (image + title + description)
 
-```Swift
-import SwiftUI
-import ETCarouSwift
+Use `CarouItem` for each slide and the `items` initializer. Configure layout (stacked vs overlay) and appearance (card inset, borders, shadow) via `CarouViewConfiguration`.
 
-struct ContentView: View {
-    @State private var currentImageIndex: Int = 0
-    
-    let images: [UIImage] = [
-        UIImage(named: "1")!,
-        UIImage(named: "2")!,
-        UIImage(named: "3")!,
-        UIImage(named: "4")!,
-        UIImage(named: "5")!
-    ]
-    
-    var body: some View {
-        VStack {
-            CarouView(
-                imageSet: images,
-                rideDirection: .rightToLeft,
-                autoRideEnabled: true,
-                showTime: 2.0,
-                dotColor: .gray,
-                currentDotColor: .blue,
-                dotSize: .medium,
-                onImageChanged: { index in
-                    currentImageIndex = index
-                },
-                onImageTapped: { index in
-                    print("Tapped image at index: \(index)")
-                }
-            )
-            .frame(height: 300)
-            
-            Text("Image #\(currentImageIndex + 1)")
-                .font(.headline)
-        }
-    }
-}
-```
-
-### Using SwiftUI Images
-
-You can also use SwiftUI's `Image` type directly:
-
-```Swift
-let swiftUIImageSet: [Image] = [
-    Image("1"),
-    Image("2"),
-    Image("3")
-]
-
-CarouView(imageSet: swiftUIImageSet)
-```
-
-### Enriched carousel
-
-For slides with image, title, and description, use `CarouItem` and the items initializer. You can configure layout (stacked vs overlay), text style, and card appearance (inset, border, shadow).
-
-```Swift
-import SwiftUI
-import ETCarouSwift
-
+```swift
 let items: [CarouItem] = [
     CarouItem(
         image: Image("photo1"),
         title: "Title",
-        description: "Optional description text."
+        description: "Optional description."
     ),
     CarouItem(image: Image("photo2"), title: "Another", description: nil)
 ]
 
 CarouView(
     items: items,
-    configuration: CarouViewConfiguration(
-        behavior: CarouBehavior(autoRideEnabled: false),
-        enrichedLayout: EnrichedCarouLayout(
-            pageControlPosition: .overlay,
-            textPosition: .overlay
-        ),
-        enrichedAppearance: EnrichedCarouAppearance(
-            view: EnrichedCarouViewAppearance(
-                cardInset: 16,
-                backgroundCornerRadius: 16,
-                backgroundShadow: CarouShadow.default
-            )
-        )
-    ),
+    configuration: CarouViewConfiguration(),
     onItemChanged: { index in },
     onItemTapped: { index in }
 )
 .frame(height: 360)
 ```
 
-Use `CarouViewConfiguration` with `enrichedLayout` and `enrichedAppearance` for text position (stacked/overlay), page control position, and card style (inset, borders, shadow).
+**Custom layout and appearance:**
+
+- **EnrichedCarouLayout:** `pageControlPosition` (`.stacked` or `.overlay`), `textPosition` (`.stacked` or `.overlay`)
+- **EnrichedCarouAppearance:** combines `CarouPageControlAppearance` and `EnrichedCarouViewAppearance` (text colors/fonts, card inset, borders, corner radius, shadow)
+
+```swift
+let behavior = CarouBehavior(autoRideEnabled: false)
+let layout = EnrichedCarouLayout(
+    pageControlPosition: .overlay,
+    textPosition: .overlay
+)
+let viewAppearance = EnrichedCarouViewAppearance(
+    cardInset: 16,
+    backgroundCornerRadius: 16,
+    backgroundShadow: .default
+)
+let enrichedAppearance = EnrichedCarouAppearance(view: viewAppearance)
+
+let config = CarouViewConfiguration(
+    behavior: behavior,
+    enrichedLayout: layout,
+    enrichedAppearance: enrichedAppearance
+)
+
+CarouView(items: items, configuration: config, onItemChanged: { _ in }, onItemTapped: { _ in })
+    .frame(height: 360)
+```
+
+### Complete example (basic + current index)
+
+```swift
+struct ContentView: View {
+    @State private var currentIndex: Int = 0
+
+    let images: [Image] = [Image("1"), Image("2"), Image("3")]
+
+    var body: some View {
+        VStack {
+            CarouView(
+                imageSet: images,
+                configuration: CarouViewConfiguration(
+                    rideDirection: .rightToLeft,
+                    autoRideEnabled: true,
+                    showTime: 2.0,
+                    dotColor: .gray,
+                    currentDotColor: .blue,
+                    dotSize: .medium
+                ),
+                onImageChanged: { index in currentIndex = index },
+                onImageTapped: { index in print("Tapped \(index)") }
+            )
+            .frame(height: 300)
+
+            Text("Slide \(currentIndex + 1) of \(images.count)")
+                .font(.headline)
+        }
+    }
+}
+```
 
 ## Author
 
@@ -241,7 +205,6 @@ Use `CarouViewConfiguration` with `enrichedLayout` and `enrichedAppearance` for 
 * [@LinkedIn](https://www.linkedin.com/in/elena-slovushch/)
 * [@StackOverFlow](https://stackoverflow.com/users/4506863/elena?tab=profile)
 
-
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License — see the [LICENSE.md](LICENSE.md) file for details.

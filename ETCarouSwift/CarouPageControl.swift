@@ -21,7 +21,7 @@ struct CarouPageControl: View {
     
     /// Optional custom font for text mode (e.g. description size in enriched view).
     var textFont: Font?
-    /// When nil, text mode uses currentDotColor to match dot styling.
+    /// When nil, text mode uses currentDotColor for current page and dotColor for total.
     var textColor: Color?
 
     /// Use text mode when page count exceeds threshold (small/medium: 15, large: 10).
@@ -53,15 +53,20 @@ struct CarouPageControl: View {
         }
     }
     
-    /// Text view for overflow mode ("3 / 17"). Uses numberOfPages as total (logical count).
+    /// Text view for overflow mode ("3 / 17"). Current page uses currentDotColor, total uses dotColor.
     private var textModeView: some View {
         let displayPage = currentPage + 1 // 1-based for display
         let font = textFont ?? .system(size: dotSizePoints * 1.5, weight: .medium)
-        let color = textColor ?? currentDotColor
+        let currentColor = textColor ?? currentDotColor
+        let totalColor = textColor ?? dotColor
         
-        return Text("\(displayPage) / \(numberOfPages)")
+        return (Text("\(displayPage)")
+            .foregroundColor(currentColor)
+        + Text(" / ")
+            .foregroundColor(totalColor)
+        + Text("\(numberOfPages)")
+            .foregroundColor(totalColor))
             .font(font)
-            .foregroundColor(color)
             .monospacedDigit()
     }
 }

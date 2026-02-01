@@ -16,7 +16,6 @@ struct EnrichedCarouView: View {
     @State private var isUserInteracting: Bool = false
     @State private var lastDragTranslation: CGFloat = 0
     @State private var lastDragTime: TimeInterval = 0
-    @State private var textBlockHeight: CGFloat = 60
 
     private let items: [CarouItem]
     private let configuration: CarouViewConfiguration

@@ -66,7 +66,7 @@ struct CarouselDemoView: View {
             .frame(height: mode == .enriched ? 380 : 300)
             .padding(.horizontal, 20)
 
-            Text(mode == .basic ? "Image #\(currentIndex + 1)" : "Item #\(currentIndex + 1)")
+            Text(mode == .basic ? "Image #\(currentIndex + 1)" : "")
                 .font(.system(size: 20, weight: .bold))
             Spacer()
         }

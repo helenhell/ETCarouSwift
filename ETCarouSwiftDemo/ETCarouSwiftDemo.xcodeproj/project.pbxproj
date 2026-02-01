@@ -3,15 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		5176F35423EF300600A0FF6E /* ETCarouSwiftDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5176F35323EF300600A0FF6E /* ETCarouSwiftDemoApp.swift */; };
 		5176F35D23EF300800A0FF6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5176F35C23EF300800A0FF6E /* Assets.xcassets */; };
 		F31616582F29F7C500010E25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31616572F29F7C500010E25 /* ContentView.swift */; };
-		F31616602F2B3A0000010E25 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316165F2F2B3A0000010E25 /* ConfigurationView.swift */; };
 		F316165B2F2B37E000010E25 /* ETCarouSwift in Frameworks */ = {isa = PBXBuildFile; productRef = F316165A2F2B37E000010E25 /* ETCarouSwift */; };
+		F31616602F2B3A0000010E25 /* ConfigurationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316165F2F2B3A0000010E25 /* ConfigurationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +35,10 @@
 		F31616572F29F7C500010E25 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F316165F2F2B3A0000010E25 /* ConfigurationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		F3A4DF4F2F2F912E00CF4DC5 /* Resources */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Resources; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		5176F34D23EF300600A0FF6E /* Frameworks */ = {
@@ -67,6 +71,7 @@
 		5176F35223EF300600A0FF6E /* ETCarouSwiftDemo */ = {
 			isa = PBXGroup;
 			children = (
+				F3A4DF4F2F2F912E00CF4DC5 /* Resources */,
 				F316165F2F2B3A0000010E25 /* ConfigurationView.swift */,
 				F31616572F29F7C500010E25 /* ContentView.swift */,
 				5176F35323EF300600A0FF6E /* ETCarouSwiftDemoApp.swift */,
@@ -91,6 +96,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				F3A4DF4F2F2F912E00CF4DC5 /* Resources */,
 			);
 			name = ETCarouSwiftDemo;
 			packageProductDependencies = (

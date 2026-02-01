@@ -137,7 +137,8 @@ struct BasicCarouView: View {
                             dotColor: configuration.dotColor,
                             currentDotColor: configuration.currentDotColor,
                             dotSizePoints: resolvedConfig.dotSizePoints,
-                            direction: configuration.rideDirection
+                            direction: configuration.rideDirection,
+                            dotSize: configuration.dotSize
                         )
                         .frame(maxWidth: .infinity, alignment: .center)
                         .frame(height: geometry.size.height * 0.25)

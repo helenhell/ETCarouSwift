@@ -4,9 +4,9 @@ A SwiftUI carousel with infinite scrolling, optional auto-play, and page indicat
 
 ## Requirements
 
-* iOS 16.0+
-* Xcode 14.0+
-* Swift 5.7+
+* iOS 17.0+
+* Xcode 15.0+
+* Swift 5.9+
 
 ## Installation
 
@@ -16,6 +16,8 @@ Add ETCarouSwift via Swift Package Manager:
 2. Enter: `https://github.com/helenhell/ETCarouSwift.git`
 3. Pick the version or branch you need, then **Add Package**
 4. Add the `ETCarouSwift` library to your target
+
+To try all configuration options (basic and enriched carousel, layouts, appearance), run the demo app included in this repository.
 
 ## Usage
 

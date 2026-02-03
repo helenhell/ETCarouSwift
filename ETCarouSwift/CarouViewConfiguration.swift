@@ -67,17 +67,21 @@ public enum CarouDotSize: CGFloat {
 public struct CarouBehavior {
     public let rideDirection: CarouDirection
     public let autoRideEnabled: Bool
+    /// When true and auto-ride is on, a tap on the carousel pauses auto-advance; tap again to resume. Lets users view a slide longer.
+    public let tapPausesAutoRide: Bool
     public let showTime: Double
     public let imageScale: CarouImageScale
     
     public init(
         rideDirection: CarouDirection = .rightToLeft,
         autoRideEnabled: Bool = true,
+        tapPausesAutoRide: Bool = true,
         showTime: Double = 2.0,
         imageScale: CarouImageScale = .fill
     ) {
         self.rideDirection = rideDirection
         self.autoRideEnabled = autoRideEnabled
+        self.tapPausesAutoRide = tapPausesAutoRide
         self.showTime = showTime
         self.imageScale = imageScale
     }
@@ -278,6 +282,7 @@ public struct CarouViewConfiguration {
     // Computed for backward compatibility
     public var rideDirection: CarouDirection { behavior.rideDirection }
     public var autoRideEnabled: Bool { behavior.autoRideEnabled }
+    public var tapPausesAutoRide: Bool { behavior.tapPausesAutoRide }
     public var showTime: Double { behavior.showTime }
     public var imageScale: CarouImageScale { behavior.imageScale }
     public var dotColor: Color { pageControlAppearance.dotColor }
@@ -307,6 +312,7 @@ public struct CarouViewConfiguration {
     public init(
         rideDirection: CarouDirection = .rightToLeft,
         autoRideEnabled: Bool = true,
+        tapPausesAutoRide: Bool = true,
         showTime: Double = 2.0,
         dotColor: Color = .white,
         currentDotColor: Color = .black,
@@ -317,6 +323,7 @@ public struct CarouViewConfiguration {
         self.behavior = CarouBehavior(
             rideDirection: rideDirection,
             autoRideEnabled: autoRideEnabled,
+            tapPausesAutoRide: tapPausesAutoRide,
             showTime: showTime,
             imageScale: imageScale
         )

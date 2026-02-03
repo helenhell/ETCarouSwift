@@ -13,6 +13,7 @@ struct BasicCarouView: View {
     @State private var scrollOffset: CGFloat = 1
     @State private var dragOffset: CGFloat = 0
     @State private var autoRideTask: Task<Void, Never>?
+    @State private var autoRidePausedByTap: Bool = false
     @State private var isUserInteracting: Bool = false
     @State private var lastDragTranslation: CGFloat = 0
     @State private var lastDragTime: TimeInterval = 0
@@ -48,7 +49,7 @@ struct BasicCarouView: View {
                         .carouImageScale(configuration.imageScale)
                         .frame(width: geometry.size.width, height: geometry.size.height)
                         .clipped()
-                        .onTapGesture { onImageTapped?(0) }
+                        .onTapGesture { handleTap(index: 0) }
                 } else {
                     let count = images.count
                     let totalPages = count + 2
@@ -68,7 +69,7 @@ struct BasicCarouView: View {
                                     .clipped()
                                     .contentShape(Rectangle())
                                     .onTapGesture {
-                                        onImageTapped?(configuration.rideDirection.logicalIndex(page: p, count: count))
+                                        handleTap(index: configuration.rideDirection.logicalIndex(page: p, count: count))
                                     }
                             }
                         }
@@ -119,7 +120,7 @@ struct BasicCarouView: View {
                                         }
                                     }
                                     onImageChanged?(configuration.rideDirection.logicalIndex(page: scrollPage, count: count))
-                                    if configuration.autoRideEnabled { startAutoRide() }
+                                    if configuration.autoRideEnabled && !autoRidePausedByTap { startAutoRide() }
                                 }
                         )
 
@@ -141,9 +142,10 @@ struct BasicCarouView: View {
             }
         }
         .onAppear {
-            if configuration.autoRideEnabled && images.count > 1 { startAutoRide() }
+            if configuration.autoRideEnabled && !autoRidePausedByTap && images.count > 1 { startAutoRide() }
         }
         .onDisappear { stopAutoRide() }
+        .onChange(of: configuration.autoRideEnabled) { if !configuration.autoRideEnabled { autoRidePausedByTap = false } }
     }
 
     private func imageForPage(_ p: Int, count: Int, direction: CarouDirection) -> Image {
@@ -198,5 +200,17 @@ struct BasicCarouView: View {
     private func stopAutoRide() {
         autoRideTask?.cancel()
         autoRideTask = nil
+    }
+
+    private func handleTap(index: Int) {
+        if configuration.autoRideEnabled && configuration.tapPausesAutoRide && images.count > 1 {
+            autoRidePausedByTap.toggle()
+            if autoRidePausedByTap {
+                stopAutoRide()
+            } else {
+                startAutoRide()
+            }
+        }
+        onImageTapped?(index)
     }
 }

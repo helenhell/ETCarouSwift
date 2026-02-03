@@ -13,6 +13,7 @@ struct EnrichedCarouView: View {
     @State private var scrollOffset: CGFloat = 1
     @State private var dragOffset: CGFloat = 0
     @State private var autoRideTask: Task<Void, Never>?
+    @State private var autoRidePausedByTap: Bool = false
     @State private var isUserInteracting: Bool = false
     @State private var lastDragTranslation: CGFloat = 0
     @State private var lastDragTime: TimeInterval = 0
@@ -115,9 +116,10 @@ struct EnrichedCarouView: View {
             }
         }
         .onAppear {
-            if configuration.autoRideEnabled && items.count > 1 { startAutoRide() }
+            if configuration.autoRideEnabled && !autoRidePausedByTap && items.count > 1 { startAutoRide() }
         }
         .onDisappear { stopAutoRide() }
+        .onChange(of: configuration.autoRideEnabled) { if !configuration.autoRideEnabled { autoRidePausedByTap = false } }
     }
     
     // MARK: - Single Item View
@@ -164,7 +166,7 @@ struct EnrichedCarouView: View {
                     innerHeight: innerHeight
                 )
             }
-            .onTapGesture { onItemTapped?(0) }
+            .onTapGesture { handleTap(index: 0) }
         }
     }
     
@@ -254,7 +256,7 @@ struct EnrichedCarouView: View {
                     .clipped()
                     .contentShape(Rectangle())
                     .onTapGesture {
-                        onItemTapped?(configuration.rideDirection.logicalIndex(page: p, count: count))
+                        handleTap(index: configuration.rideDirection.logicalIndex(page: p, count: count))
                     }
             }
         }
@@ -425,8 +427,20 @@ struct EnrichedCarouView: View {
                     }
                 }
                 onItemChanged?(configuration.rideDirection.logicalIndex(page: scrollPage, count: count))
-                if configuration.autoRideEnabled { startAutoRide() }
+                if configuration.autoRideEnabled && !autoRidePausedByTap { startAutoRide() }
             }
+    }
+
+    private func handleTap(index: Int) {
+        if configuration.autoRideEnabled && configuration.tapPausesAutoRide && items.count > 1 {
+            autoRidePausedByTap.toggle()
+            if autoRidePausedByTap {
+                stopAutoRide()
+            } else {
+                startAutoRide()
+            }
+        }
+        onItemTapped?(index)
     }
 
     // MARK: - Font Helpers

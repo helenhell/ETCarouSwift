@@ -44,6 +44,7 @@ struct ConfigurationView: View {
     // MARK: - Behavior (shared)
     @State private var rideDirection: CarouDirection = .leftToRight
     @State private var autoRideEnabled: Bool = true
+    @State private var tapPausesAutoRide: Bool = true
     @State private var showTime: Double = 2.0
     @State private var imageScale: CarouImageScale = .fill
     
@@ -82,6 +83,7 @@ struct ConfigurationView: View {
         let behavior = CarouBehavior(
             rideDirection: rideDirection,
             autoRideEnabled: autoRideEnabled,
+            tapPausesAutoRide: tapPausesAutoRide,
             showTime: showTime,
             imageScale: imageScale
         )
@@ -161,6 +163,7 @@ struct ConfigurationView: View {
                 Toggle("Auto-ride enabled", isOn: $autoRideEnabled)
 
                 if autoRideEnabled {
+                    Toggle("Tap to pause/resume", isOn: $tapPausesAutoRide)
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
                             Text("Slide duration")

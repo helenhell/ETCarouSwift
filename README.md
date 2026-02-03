@@ -96,14 +96,16 @@ CarouView(imageSet: images, configuration: config)
 
 | Area | Options |
 |------|--------|
-| **CarouBehavior** | `rideDirection` (`.leftToRight` / `.rightToLeft`), `autoRideEnabled`, `showTime`, `imageScale` (`.fill` / `.fit`) |
+| **CarouBehavior** | `rideDirection` (`.leftToRight` / `.rightToLeft`), `autoRideEnabled`, `tapPausesAutoRide`, `showTime`, `imageScale` (`.fill` / `.fit`) |
 | **CarouPageControlAppearance** | `dotColor`, `currentDotColor`, `dotSize` (`.small` / `.medium` / `.large`) |
 
 ### Callbacks
 
 - **Basic:** `onImageChanged: (Int) -> Void` — current page index when the slide changes  
 - **Basic:** `onImageTapped: (Int) -> Void` — index when the user taps a slide  
-- **Enriched:** `onItemChanged` and `onItemTapped` — same idea for item index
+- **Enriched:** `onItemChanged` and `onItemTapped` — same idea for item index  
+
+When `autoRideEnabled` and `tapPausesAutoRide` are both true, tapping the carousel pauses auto-advance so the user can view a slide longer; tap again to resume.
 
 ```swift
 @State private var currentIndex: Int = 0

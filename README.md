@@ -2,6 +2,8 @@
 
 A SwiftUI carousel with infinite scrolling, optional auto-play, and page indicators. Use it for image-only slides or for rich slides (image plus title and description) with configurable layout and card styling.
 
+<img src="assets/demo.gif" alt="ETCarouSwift demo" width="260">
+
 ## Requirements
 
 * iOS 17.0+

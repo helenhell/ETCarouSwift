@@ -4,7 +4,7 @@ A SwiftUI carousel with infinite scrolling, optional auto-play, and page indicat
 
 ## Demo
 
-![ETCarouSwift demo](assets/demo.gif)
+![ETCarouSwift demo](Assets/demo.gif)
 
 ## Requirements
 
